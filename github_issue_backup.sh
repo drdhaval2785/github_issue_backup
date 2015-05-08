@@ -1,0 +1,2 @@
+curl 'https://api.github.com/repos/sanskrit-lexicon/GreekInSanskrit/issues/4?page=1&per_page=1000&client_id=1dd1dddcb68d6148c249&client_secret=7577e3bd5cb5ad20bea86430a8ed5a29df5fa455' > outfile.txt
+curl 'https://api.github.com/repos/sanskrit-lexicon/GreekInSanskrit/issues/4/comments?page=1&per_page=1000&client_id=1dd1dddcb68d6148c249&client_secret=7577e3bd5cb5ad20bea86430a8ed5a29df5fa455' >> outfile.txt
