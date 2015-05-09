@@ -1,0 +1,11 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<!--... Defining UTF-8 as our default character set, so that devanagari is displayed properly. -->
+<meta charset="UTF-8">
+<!--... Defining CSS -->
+<link rel="stylesheet" type="text/css" href="mystyle.css">
+<!--... including Ajax jquery. -->
+</head> 
+<body>
+<h1><a href="https://api.github.com/repos/sanskrit-lexicon/CORRECTIONS/issues/54" target="_blank">https://api.github.com/repos/sanskrit-lexicon/CORRECTIONS/issues/54</a></h1><hr/><h2>Title - Possible transliteration error in SCH</h2><hr/><b><a href='https://github.com/drdhaval2785' target='_blank'>drdhaval2785</a> :</b><br/><b><a href='https://github.com/funderburkjim' target='_blank'>funderburkjim</a> :</b><br/><p>It is neither SLP1 nor IAST in description.<br/>For details see <a href="https://github.com/sanskrit-lexicon/CORRECTIONS/issues/51#issuecomment-67450538" target="_blank">https://github.com/sanskrit-lexicon/CORRECTIONS/issues/51#issuecomment-67450538</a></p><hr/><b><a href='https://github.com/drdhaval2785' target='_blank'>drdhaval2785</a> :</b><br/><b><a href='https://github.com/gasyoun' target='_blank'>gasyoun</a> :</b><br/><p>It's a mix indeed see <a href="https://github.com/sanskrit-lexicon/SCH/issues/1" target="_blank">https://github.com/sanskrit-lexicon/SCH/issues/1</a> and in some cases an unknown mix as well <a href="https://github.com/sanskrit-lexicon/SCH/issues/3" target="_blank">https://github.com/sanskrit-lexicon/SCH/issues/3</a></p><hr/><b><a href='https://github.com/funderburkjim' target='_blank'>funderburkjim</a> :</b><br/><p>This should be fixed now as mentioned in issue 51.<br/>Here's a copy of what I said there in regard to this problem:<br/><br/>The display you mention is of key2. Now key2 is IAST in the AS coding. So if key2 is displayed as in the text it will be displayed as IAST key2 in AS coding is 'daus4cittya' and it should display in IAST as<br/>'dauścittya' . The error was in the 'O' of the display.<br/><br/>So there was a bug. The bug was in make_xml.py which makes the xml file used for the display.<br/><br/>The bug has been fixed so dauścittya is displayed.<br/><br/></p><hr/></body></html>
