@@ -7,7 +7,7 @@ function hrefdetails($file)
 
 	//Parse the HTML. The @ is used to suppress any parsing errors
 	//that will be thrown if the $html string isn't valid XHTML.
-	$dom->loadHTML($html);
+	@$dom->loadHTML($html);
 
 	//Get all links. You could also use any other tag name here,
 	//like 'img' or 'table', to extract other tags.
