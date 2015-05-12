@@ -24,7 +24,7 @@
   </div>
 </div><div class="edit-comment-hide">
       <div class="comment-body markdown-body markdown-format js-comment-body">
-          <p>At some places there are extra spaces in Devanagari rendering<br/>e.g. उभयतःप्र उग instead of उभयतःप्रउग.<br/>This is mostly seen in cases of hiatus</p>
+          <p><p>At some places there are extra spaces in Devanagari rendering<br/>e.g. उभयतःप्र उग instead of उभयतःप्रउग.<br/>This is mostly seen in cases of hiatus</p></p>
   </div>
   </div>
   </div>
@@ -42,7 +42,7 @@
   </div>
 </div><div class="edit-comment-hide">
       <div class="comment-body markdown-body markdown-format js-comment-body">
-          <p><strong><a href="https://github.com/funderburkjim" target="_blank">@funderburkjim</a></strong> <br/>As you are now well versed in Hiatus - time to handle this. <br/>A small tweak in transcoder can do this for sure.<br/></p>
+          <p><p>@funderburkjim <br/>As you are now well versed in Hiatus - time to handle this. <br/>A small tweak in transcoder can do this for sure.<br/></p></p>
   </div>
   </div>
   </div>
@@ -60,7 +60,7 @@
   </div>
 </div><div class="edit-comment-hide">
       <div class="comment-body markdown-body markdown-format js-comment-body">
-          <p>I investigated this for the MW (2014) displays and found the following code as the culprit (in web/webtc/disp.php):<br/>```<br/>//   Rarely two vowels occur consecutively (e.g. afRin).<br/>//   These don't print properly in devanagari.<br/>$key = preg_replace('/([aAiIuIfFxXeEoO])([aAiIuIfFxXeEoO])/'\\\\\1 \\\\2\$key); <br/>```<br/>So apparently several years ago it appeared that there was a problem with rendering consecutive vowels in Devanagari so an extra space was introduced here.<br/><br/>I commented out the $key = ... line and the space goes away.<br/><br/>This should fix this issue for MW.<br/><br/>I had already done the change for MW72 SCH SHS PD AP AP90 <br/><br/>I've done the same just now for VCP SKD PWG PW STC.<br/><br/>If you notice the problem elsewhere let me know.</p>
+          <p><p>I investigated this for the MW (2014) displays and found the following code as the culprit (in web/webtc/disp.php):<br/><code>&lt;br/&gt;//   Rarely two vowels occur consecutively (e.g. afRin).&lt;br/&gt;//   These don't print properly in devanagari.&lt;br/&gt;$key = preg_replace('/([aAiIuIfFxXeEoO])([aAiIuIfFxXeEoO])/'\\\\\1 \\\\2\$key); &lt;br/&gt;</code><br/>So apparently several years ago it appeared that there was a problem with rendering consecutive vowels in Devanagari so an extra space was introduced here.<br/><br/>I commented out the $key = ... line and the space goes away.<br/><br/>This should fix this issue for MW.<br/><br/>I had already done the change for MW72 SCH SHS PD AP AP90 <br/><br/>I've done the same just now for VCP SKD PWG PW STC.<br/><br/>If you notice the problem elsewhere let me know.</p></p>
   </div>
   </div>
   </div>
@@ -78,7 +78,7 @@
   </div>
 </div><div class="edit-comment-hide">
       <div class="comment-body markdown-body markdown-format js-comment-body">
-          <p>Seems fine now.<br/><image src="<a href="https://cloud.githubusercontent.com/assets/5755132/5153054/f8d87628-7237-11e4-917e-98673c7cc29f.PNG" target="_blank">https://cloud.githubusercontent.com/assets/5755132/5153054/f8d87628-7237-11e4-917e-98673c7cc29f.PNG</a>"></image><br/></p>
+          <p><p>Seems fine now.<br/><img src=https://cloud.githubusercontent.com/assets/5755132/5153054/f8d87628-7237-11e4-917e-98673c7cc29f.PNG alt=capture /><br/></p></p>
   </div>
   </div>
   </div>

@@ -1,4 +1,5 @@
 <?php
+include 'Parsedown.php';
 $header = '<!DOCTYPE html>
 <html class="" lang="en">
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/object# article: http://ogp.me/ns/article# profile: http://ogp.me/ns/profile#">
@@ -24,34 +25,38 @@ for($i=1;$i<intval($argv[3])+1;$i++)
 	fputs($outfile,$header);
 	$issuenumber = $input[5];
 	$issuenumber = strip_useless($issuenumber);
+	$issuenumber = strip_quote($issuenumber);
 	foreach ($input as $value)
 	{
 		if (strpos($value,'"title"')!==false)
 		{
 			$title = $value;
 			$title = strip_useless($title);
+			$title = strip_quote($title);
 			fputs($outfile,"<h1 align='center'><a href='$issuenumber' target='_blank'>$title</h1><hr/>");
 		}
 		elseif (strpos($value,'"login"')!==false)
 		{
 			$username = $value;
 			$username = strip_useless($username);
+			$username = strip_quote($username);
 			$usernameoutput[]=$username;
-//			fputs ($outfile,commentheader($username,$time));
 		}
 		elseif (strpos($value,'"created_at"')!==false)
 		{
 			$time = $value;
 			$time = strip_useless($time);
+			$time = strip_quote($time);
 			$time = time_link($time);
 			$timeoutput[]=$time;
-//			fputs ($outfile,commentheader($username,$time));
 		}
 		elseif (strpos($value,'"body"')!==false)
 		{
 			$body = $value;
 			$body = strip_useless($body);
-			$body = body_link($body);
+			//$body = body_link($body);
+			$body = parsedown($body);
+			$body = strip_quote($body);
 			$bodyoutput[]=$body;
 //			fputs($outfile,"$body<hr/>");
 		}
@@ -72,8 +77,12 @@ function strip_useless($text)
 {
 	$text = trim($text);
 	$text = str_replace(array('"url": ','"title": ','"body": ','"login": ','"html_url": ','"created_at": '),array('','','','','',''),$text);
-	$text = str_replace(array('"',','),array('',''),$text);
 	$text = trim($text);
+	return $text;
+}
+function strip_quote($text)
+{
+	$text = str_replace(array('"',',','&quot;'),array('','',''),$text);
 	return $text;
 }
 function make_link($text)
@@ -138,6 +147,14 @@ function commentheader($username,$time)
   </div>
 </div>';
 return $output;
+}
+function parsedown($text)
+{
+	$text = str_replace('href=\"','href="',$text);
+	$text = str_replace('\">','">',$text);
+	$text = str_replace('\r\n','<br/>',$text);
+	$Parsedown = new Parsedown();
+	return $Parsedown->text($text);
 }
 
 function commentbody($text)
