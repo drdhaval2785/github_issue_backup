@@ -8,6 +8,17 @@ function parsedown($text)
 	$Parsedown = new Parsedown();
 	echo $Parsedown->text($text);
 }
-$line = '25 mahAyogapaYcaratneASvalAyanopayogyADAnaprakaraRa - eA >>\r\nmahAyogapaYcaratne ASvalAyanopayogyADAnaprakaraRa - eA (space needed)\r\n\r\nIn MW print it is like this- separated by hyphens.\r\n![mw](https://cloud.githubusercontent.com/assets/6392207/4521785/94bf9f5e-4d1b-11e4-9a4f-7092d7c9ac9b.JPG)\r\n';
+function strip_quote_body($text)
+{
+	$text = trim($text);
+	$text = preg_replace('/^(["])/','',$text);
+	$text = preg_replace('/(["],?)$/','',$text);
+	$text = str_replace('&quot;','',$text);
+//	$text = str_replace(array('"',',','&quot;'),array('','',''),$text);
+	return $text;
+}
+$line = '"##I have compared the Vowel and Consonant patterns of MW against that of PWG. \r\n\r\nThe result is attached <a href=\"https://github.com/drdhaval2785/SanskritSpellCheck/blob/master/MWagainstPWG/MWagainstPWG.html\">herewith</a>. \r\n\r\nCode for checking is attached <a href=\"https://github.com/drdhaval2785/SanskritSpellCheck/blob/master/faultfinder.php\">here</a>. \r\n<a href=\"https://docs.google.com/document/d/1G4HoDz9nuj2GPeHQopNVSnDEGrnXtoAuXFugj4sQHZg/edit?usp=sharing\">Google doc</a> for logic behind approach: \r\nVideo tutorial for code running - http://youtu.be/qLqYUZUGM6M\r\n\r\nInput data : <a href=\"https://github.com/drdhaval2785/SanskritSpellCheck/blob/master/MWslp.txt\">MW</a>\r\n and \r\n<a href=\"https://github.com/drdhaval2785/SanskritSpellCheck/blob/master/PWKslp.txt\">PWG</a> \r\n\r\nI am checking the HTML file thoroughly.\r\nThere are many issues found out by this approach.\r\n\r\nHere is the <a href=\"https://www.youtube.com/watch?v=rKZ_OsSHwsY&feature=youtu.be\">video tutorial</a> about how to use the HTML file for error finding.",';
+$line = strip_quote_body($line);
 echo parsedown($line);
+
 ?>

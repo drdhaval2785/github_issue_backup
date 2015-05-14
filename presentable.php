@@ -53,12 +53,14 @@ for($i=1;$i<intval($argv[3])+1;$i++)
 		elseif (strpos($value,'"body"')!==false)
 		{
 			$body = $value;
+//			$body = '"body": "  3 hariharamanRqalazoqaSaliNgodBava instead of hariharamaRqalazoqaSaliNgodBava (extra \'n\' before \'R\').\r\n\r\n"';
 			$body = strip_useless($body);
-			//$body = body_link($body);
+			$body = str_replace("\r\n"," \r\n",$body);
+			$body = strip_quote_body($body);
 			$body = parsedown($body);
-			$body = strip_quote($body);
+			$body = post_parsedown($body);
+			$body = strip_quote_body($body);
 			$bodyoutput[]=$body;
-//			fputs($outfile,"$body<hr/>");
 		}
 	}	
 //echo "</body></html>";
@@ -78,11 +80,24 @@ function strip_useless($text)
 	$text = trim($text);
 	$text = str_replace(array('"url": ','"title": ','"body": ','"login": ','"html_url": ','"created_at": '),array('','','','','',''),$text);
 	$text = trim($text);
+	$text = str_replace('\r\n\r\n\r\n','\r\n',$text);
+	$text = str_replace('\r\n\r\n','\r\n',$text);
+	$text = str_replace(array('\r\n'),array('
+	~~~'),$text);
 	return $text;
 }
 function strip_quote($text)
 {
 	$text = str_replace(array('"',',','&quot;'),array('','',''),$text);
+	return $text;
+}
+function strip_quote_body($text)
+{
+	$text = trim($text);
+	$text = preg_replace('/^(["])/','',$text);
+	$text = preg_replace('/(["],?)$/','',$text);
+	$text = str_replace('&quot;','',$text);
+//	$text = str_replace(array('"',',','&quot;'),array('','',''),$text);
 	return $text;
 }
 function make_link($text)
@@ -100,7 +115,16 @@ function time_link($text)
 		$text = str_replace(array("T","Z"),array(" ",""),$text);
 		return $text;
 }
-function body_link($input)
+function parsedown($text)
+{
+	$text = preg_replace('/\r\n```\r\n([^`]*)\r\n```\r\n/', '\r\n```$1```\r\n', $text); // Treating the blob
+	$text = str_replace('] (','](',$text); // Links error correction
+	$text = str_replace('href=\"','href="',$text);
+	$text = str_replace('\">','">',$text);
+	$Parsedown = new Parsedown();
+	return $Parsedown->text($text);
+}
+function post_parsedown($input)
 {
 	$input = preg_replace('/\r\n```\r\n([^`]*)\r\n```\r\n/', '\r\n```$1```\r\n', $input); // Treating the blob
 	$split = explode('\r\n',$input);
@@ -108,24 +132,20 @@ function body_link($input)
 	{
 		$text = $split[$i];
 		// Multiple underscores pending.
-		$text = preg_replace('/^>([^>]*)$/', '<blockquotes>$1</blockquotes>', $text); // blockquotes
 		$text = preg_replace('/!\[([^\]]*)\]\(([^\)]*)\)/', '<image src="$2"></image>', $text); // Capture
-		$text = str_replace('] (','](',$text); // Links error correction
-		$text = preg_replace('/([^"\']*)(https?:\/\/[^\s"<>)]+)\/?/', '$1<a href="$2" target="_blank">$2</a>', $text); // URL autolinking
-#		$text = preg_replace('/\[([^\]]*)\]\(([^\)]*)\)/', '<a href="$2" target="_blank">$1</a>', $text); // Links
-		$text = preg_replace('/\r\n```\r\n([^`]*)\r\n```\r\n/', '<code>$1</code>', $text); // Codeblock
-		$text = preg_replace('/```([^`]*)```/', '<code>$1</code>', $text); // Codeblock
-		$text = preg_replace('/^######([^#]*)/', '<h6>$1</h6>', $text); // h6
-		$text = preg_replace('/^#####([^#]*)/', '<h5>$1</h5>', $text); // h5
-		$text = preg_replace('/^####([^#]*)/', '<h4>$1</h4>', $text); // h4
-		$text = preg_replace('/^###([^#]*)/', '<h3>$1</h3>', $text); // h3
-		$text = preg_replace('/^##([^#]*)/', '<h2>$1</h2>', $text); // h2
-		$text = preg_replace('/^#([^#]*)/', '<h1>$1</h1>', $text); // h1
+//		$text = preg_replace('/```([^`]*)```/', '<code>$1</code>', $text); // Codeblock
 		$text = preg_replace('/\*\*([^~]*)\*\*/', '<b>$1</b>', $text); // bold
 		$text = preg_replace('/\*([^~]*)\*/', '<i>$1</i>', $text); // italics
 		$text = preg_replace('/^\*([^\*]*)$/', '<li>$1', $text); // unordered list
 		$text = preg_replace('/^[0-9][.]([^\*]*)/', '<li>$1', $text); // unordered list 
 		$text = preg_replace('/@([^ ]*) /', '<strong><a href="https://github.com/$1" target="_blank">@$1</a></strong> ', $text); // mentioning		
+		$text = str_replace('<pre><code></code></pre>','',$text);
+		$text = str_replace('<pre><code>~~~','<p>',$text);
+		$text = str_replace('</code></pre>','</p>',$text);
+		$text = str_replace('<pre><code class="language-and">','and',$text);
+		$text = str_replace('&lt;','<',$text);
+		$text = str_replace('&gt;','>',$text);
+		$text = str_replace('~~~','<br/>',$text);
 		$splitout[$i] = $text;
 	}
 	$output = implode('<br/>',$splitout);
@@ -147,14 +167,6 @@ function commentheader($username,$time)
   </div>
 </div>';
 return $output;
-}
-function parsedown($text)
-{
-	$text = str_replace('href=\"','href="',$text);
-	$text = str_replace('\">','">',$text);
-	$text = str_replace('\r\n','<br/>',$text);
-	$Parsedown = new Parsedown();
-	return $Parsedown->text($text);
 }
 
 function commentbody($text)

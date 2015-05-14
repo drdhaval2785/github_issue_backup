@@ -1,0 +1,3 @@
+# code for copy paste in commandline for testing
+cd c_drive/xampp/htdocs/github_issue_backup
+php github_issue_backup.php sanskrit-lexicon CORRECTIONS 5
