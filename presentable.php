@@ -52,13 +52,14 @@ for($i=1;$i<intval($argv[3])+1;$i++)
 		}
 		elseif (strpos($value,'"body"')!==false)
 		{
-			$body = $value;
-//			$body = '"body": "  3 hariharamanRqalazoqaSaliNgodBava instead of hariharamaRqalazoqaSaliNgodBava (extra \'n\' before \'R\').\r\n\r\n"';
+//			$body = $value;
+			$body = 'I am checking the HTML file thoroughly.\r\n>There are many issues found out by this approach.\r\n\r\nLet us try';
 			$body = strip_useless($body);
 			$body = str_replace("\r\n"," \r\n",$body);
 			$body = strip_quote_body($body);
 			$body = parsedown($body);
 			$body = post_parsedown($body);
+			echo $body;
 			$body = strip_quote_body($body);
 			$bodyoutput[]=$body;
 		}
@@ -142,10 +143,13 @@ function post_parsedown($input)
 		$text = str_replace('<pre><code></code></pre>','',$text);
 		$text = str_replace('<pre><code>~~~','<p>',$text);
 		$text = str_replace('</code></pre>','</p>',$text);
+		$text = preg_replace('/(~~~&gt;)([^~]*)(~~~)/','<blockquote>$2</blockquote>',$text);
 		$text = str_replace('<pre><code class="language-and">','and',$text);
 		$text = str_replace('&lt;','<',$text);
 		$text = str_replace('&gt;','>',$text);
 		$text = str_replace('~~~','<br/>',$text);
+		$text = str_replace('<p><p>','<p>',$text);
+		$text = str_replace('</p></p>','</p>',$text);
 		$splitout[$i] = $text;
 	}
 	$output = implode('<br/>',$splitout);
@@ -173,7 +177,7 @@ function commentbody($text)
 {
 	$output = '<div class="edit-comment-hide">
       <div class="comment-body markdown-body markdown-format js-comment-body">
-          <p>'.$text.'</p>
+          '.$text.'
   </div>
   </div>
   </div>
