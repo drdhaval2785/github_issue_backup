@@ -12,6 +12,7 @@ e.g. `github_issue_backup.sh drdhaval2785 github_issue_backup 5` to fetch the is
 (Don't forget to change username, reponame, Issue number and Destination folder according to your need)
 
 * Step 4 : Press enter to execute the command.
+* Step 5 : The text data would be placed in username/reponame directory in the working directory and HTML data wouild be placed in username/reponame/html directory.
 
 # Documentation for fetching data
 * This method uses api.github.com with client_id and client_secret for backing up issues. 
@@ -20,7 +21,6 @@ e.g. `github_issue_backup.sh drdhaval2785 github_issue_backup 5` to fetch the is
 e.g. `github_issue_backup.sh drdhval2785 SanskritVerb 150 E:\github_backup`
 
 * This program takes three arguments.
-
 The first argument is the user/org name. The second argument is repo name. Third argument is the issue number till which you want to backup issues.
 
 There are two lines in curl which needs a bit of explanation:
