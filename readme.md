@@ -18,7 +18,7 @@ e.g. `github_issue_backup.sh drdhaval2785 github_issue_backup 5` to fetch the is
 * This method uses api.github.com with client_id and client_secret for backing up issues. 
 * Generic codeline is `github_issue_backup.sh UserName RepoName IssueToWhichDataIsToBeFetched`
 
-e.g. `github_issue_backup.sh drdhval2785 SanskritVerb 150 E:\github_backup`
+e.g. `github_issue_backup.sh drdhval2785 SanskritVerb 150`
 
 * This program takes three arguments.
 The first argument is the user/org name. The second argument is repo name. Third argument is the issue number till which you want to backup issues.
