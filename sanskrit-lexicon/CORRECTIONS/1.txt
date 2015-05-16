@@ -40,6 +40,7 @@
   "body": "The https://github.com/sanskrit-lexicon/CORRECTIONS/blob/master/correctionform.txt file in this repository gives an accurate, public view of the correction submissions, and their status.  The plan is to keep this file in sync with the Sanskrit Lexicon Correction Form (Responses), which is where user Correction Form submissions go.\r\n\r\nAs time goes by, the plan is to have similar information about the corrections that get applied to the dictionaries by various processes outside the correction form venu.",
   "closed_by": null
 }
+BODY STARTS FROM HERE
 [
   {
     "url": "https://api.github.com/repos/sanskrit-lexicon/CORRECTIONS/issues/comments/57817061",

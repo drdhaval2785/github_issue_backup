@@ -1,26 +1,27 @@
 <?php
 include 'Parsedown.php';
-$header = '<!DOCTYPE html>
-<html class="" lang="en">
-<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/object# article: http://ogp.me/ns/article# profile: http://ogp.me/ns/profile#">
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta http-equiv="Content-Language" content="en">
-<title>Backup of github issues</title>
-<link href="trial_files/github-c486157afcc5f58155a921bc675afb08733fbaa8dcf39ac2104d3.css" media="all" rel="stylesheet">
-<link href="trial_files/github2-da2e842cc3f0aaf33b727d0ef034243c12ab008fd09b24868b97.css" media="all" rel="stylesheet">
-<meta http-equiv="x-pjax-version" content="4426702614c8182f33d1780ad1169662">
+//mkdir("$argv[1]/$argv[2]/html/");
+// Copying the stylesheets of github
+copy("github-c486157afcc5f58155a921bc675afb08733fbaa8dcf39ac2104d3.css","$argv[1]/$argv[2]/html/github-c486157afcc5f58155a921bc675afb08733fbaa8dcf39ac2104d3.css");
+copy("github2-da2e842cc3f0aaf33b727d0ef034243c12ab008fd09b24868b97.css","$argv[1]/$argv[2]/html/github2-da2e842cc3f0aaf33b727d0ef034243c12ab008fd09b24868b97.css");
+$header = "<!DOCTYPE html>
+<html class='' lang='en'>
+<head prefix='og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/object# article: http://ogp.me/ns/article# profile: http://ogp.me/ns/profile#'>
+<meta http-equiv='content-type' content='text/html; charset=UTF-8'>
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+<meta http-equiv='Content-Language' content='en'>
+<title>$argv[1]/$argv[2]/$argv[3]</title>
+<link href='github-c486157afcc5f58155a921bc675afb08733fbaa8dcf39ac2104d3.css' media='all' rel='stylesheet'>
+<link href='github2-da2e842cc3f0aaf33b727d0ef034243c12ab008fd09b24868b97.css' media='all' rel='stylesheet'>
+<meta http-equiv='x-pjax-version' content='4426702614c8182f33d1780ad1169662'>
 </head>
-<body class="logged_in  env-production windows vis-public">
-';
-mkdir("$argv[1]/$argv[2]/html/");
-copy("mystyle.css","$argv[1]/$argv[2]/html/mystyle.css");
-//echo $argv[3];
-for($i=1;$i<intval($argv[3])+1;$i++)
-{
-	echo "printing $i.html";
-	$input = file("$argv[1]/$argv[2]/$i.txt");
+<body class='logged_in  env-production windows vis-public'>
+";
+
+$i=intval($argv[3]);
+	findissue("$argv[1]/$argv[2]/$i.txt");
+	$input = file("stopgap.txt");
 	$outfile = fopen("$argv[1]/$argv[2]/html/$i.html","w+");
 	fputs($outfile,$header);
 	$issuenumber = $input[5];
@@ -52,19 +53,16 @@ for($i=1;$i<intval($argv[3])+1;$i++)
 		}
 		elseif (strpos($value,'"body"')!==false)
 		{
-//			$body = $value;
-			$body = 'I am checking the HTML file thoroughly.\r\n>There are many issues found out by this approach.\r\n\r\nLet us try';
+			$body = $value;
 			$body = strip_useless($body);
 			$body = str_replace("\r\n"," \r\n",$body);
 			$body = strip_quote_body($body);
 			$body = parsedown($body);
 			$body = post_parsedown($body);
-			echo $body;
 			$body = strip_quote_body($body);
 			$bodyoutput[]=$body;
 		}
 	}	
-//echo "</body></html>";
 //fputs ($outfile,commentheader('drdhaval2785','2015-05-07T08:47:20'));
 	for ($j=0;$j<count($usernameoutput);$j++)
 	{
@@ -74,7 +72,7 @@ for($i=1;$i<intval($argv[3])+1;$i++)
 $usernameoutput=array(); $timeoutput=array(); $bodyoutput=array();
 fputs($outfile,"</body></html>");
 fclose($outfile);
-}
+unlink("stopgap.txt");
 
 function strip_useless($text)
 {
@@ -134,12 +132,12 @@ function post_parsedown($input)
 		$text = $split[$i];
 		// Multiple underscores pending.
 		$text = preg_replace('/!\[([^\]]*)\]\(([^\)]*)\)/', '<image src="$2"></image>', $text); // Capture
-//		$text = preg_replace('/```([^`]*)```/', '<code>$1</code>', $text); // Codeblock
 		$text = preg_replace('/\*\*([^~]*)\*\*/', '<b>$1</b>', $text); // bold
 		$text = preg_replace('/\*([^~]*)\*/', '<i>$1</i>', $text); // italics
 		$text = preg_replace('/^\*([^\*]*)$/', '<li>$1', $text); // unordered list
 		$text = preg_replace('/^[0-9][.]([^\*]*)/', '<li>$1', $text); // unordered list 
-		$text = preg_replace('/@([^ ]*) /', '<strong><a href="https://github.com/$1" target="_blank">@$1</a></strong> ', $text); // mentioning		
+		$text = str_replace('<br />','<br/>',$text);
+		$text = preg_replace('/@([^\W_ ]*)([\W_ ])/', '<strong><a href="https://github.com/$1" target="_blank">@$1</a></strong>$2', $text); // mentioning		
 		$text = str_replace('<pre><code></code></pre>','',$text);
 		$text = str_replace('<pre><code>~~~','<p>',$text);
 		$text = str_replace('</code></pre>','</p>',$text);
@@ -155,7 +153,17 @@ function post_parsedown($input)
 	$output = implode('<br/>',$splitout);
 	return $output;
 }
-
+function findissue($filepath)
+{
+	$data = file_get_contents($filepath);
+	$issue_comment_separator = explode('BODY STARTS FROM HERE',$data);
+	$issue = $issue_comment_separator[0];
+	$split_issue = preg_split('/[^!][\[][^ ]/',$issue);
+	$closed_at=explode('"comments":',$split_issue[1]);
+	$closed_by=explode('"closed_by":',$closed_at[1]);
+	$comment = $issue_comment_separator[1];
+	file_put_contents('stopgap.txt',$split_issue[0].'['.$closed_by[0].$comment);
+}
 function commentheader($username,$time)
 {
 	$output = '<div class="comment previewable-edit timeline-comment js-comment js-task-list-container owner-comment current-user" data-body-version="3d69eb2502aec4738da37c0867d635da">
