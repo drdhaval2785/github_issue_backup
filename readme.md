@@ -29,4 +29,4 @@ There are two lines in curl which needs a bit of explanation:
 
 # Documentation of parsing the data
 	The present parsing script is presentable.php which is a wrapper on [ParseDown](http://parsedown.org/) for better handling of Github Flavored Markdown and minor variations to handle how github API gives the data.
-	
+	The environment in HTML is derived from the CSS files which github uses.
