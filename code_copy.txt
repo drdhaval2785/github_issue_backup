@@ -1,5 +1,5 @@
 # code for copy paste in commandline for testing
 cd c_drive/xampp/htdocs/github_issue_backup
 php presentable.php sanskrit-lexicon CORRECTIONS 5
-github_issue_backup.sh sanskrit-lexicon CORRECTIONS 2 E:\github_trial
+github_issue_backup.sh sanskrit-lexicon CORRECTIONS 2
 
