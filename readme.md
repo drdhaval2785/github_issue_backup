@@ -4,7 +4,9 @@ e.g. [text file](http://drdhaval2785.github.io/github_issue_backup/sanskrit-lexi
 
 # Requirements
 [PHP](http://php.net/)
+
 [Git Bash](https://msysgit.github.io/) (or some linux platform)
+
 [cURL](http://curl.haxx.se/) - N.B. Git has cURL inbuilt, so you won't need separate cURL if you use Git.
 
 
