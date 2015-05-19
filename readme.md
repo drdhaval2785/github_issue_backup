@@ -15,12 +15,7 @@ e.g. [text file](http://drdhaval2785.github.io/github_issue_backup/sanskrit-lexi
 
 * Step 1 : Open your commandline with cUrl installed (Git bash has cUrl inbuilt. I use Git bash for this purpose. Windows CMD also works well in my machine).
 * Step 2 : cd to the directory where you have placed github_issue_backup.sh file
-* Step 3 : In the commandline write `github_issue_backup.sh UserName RepoName IssueNumberToWhichDataIsToBeFetched`
-
-e.g. `github_issue_backup.sh drdhaval2785 github_issue_backup 5` to fetch the issues in the current repository.
-
-(Don't forget to change username, reponame, Issue number and Destination folder according to your need)
-
+* Step 3 : In the commandline write `github_issue_backup.sh UserName RepoName IssueNumberToWhichDataIsToBeFetched` e.g. `github_issue_backup.sh drdhaval2785 github_issue_backup 5` to fetch the issues in the current repository. (Don't forget to change username, reponame, Issue number and Destination folder according to your need)
 * Step 4 : Press enter to execute the command.
 * Step 5 : The text data would be placed in username/reponame directory in the working directory and HTML data wouild be placed in username/reponame/html directory.
 
