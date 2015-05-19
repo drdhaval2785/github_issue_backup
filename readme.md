@@ -11,6 +11,8 @@ e.g. [text file](http://drdhaval2785.github.io/github_issue_backup/sanskrit-lexi
 
 
 # User instructions:
+[Demonstration video](http://youtu.be/hNbLeMnywTA).
+
 * Step 1 : Open your commandline with cUrl installed (Git bash has cUrl inbuilt. I use Git bash for this purpose. Windows CMD also works well in my machine).
 * Step 2 : cd to the directory where you have placed github_issue_backup.sh file
 * Step 3 : In the commandline write `github_issue_backup.sh UserName RepoName IssueNumberToWhichDataIsToBeFetched`
