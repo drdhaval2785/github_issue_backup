@@ -2,6 +2,12 @@
 This command fetches the issues and comments from your github repository and stores it in a txt file for backup. It also displays it in an HTML file which looks similar to github environment.
 e.g. [text file](http://drdhaval2785.github.io/github_issue_backup/sanskrit-lexicon/CORRECTIONS/2.txt) and [html file](http://drdhaval2785.github.io/github_issue_backup/sanskrit-lexicon/CORRECTIONS/html/2.html)
 
+# Requirements
+[PHP](http://php.net/)
+[Git Bash](https://msysgit.github.io/) (or some linux platform)
+[cURL](http://curl.haxx.se/) - N.B. Git has cURL inbuilt, so you won't need separate cURL if you use Git.
+
+
 # User instructions:
 * Step 1 : Open your commandline with cUrl installed (Git bash has cUrl inbuilt. I use Git bash for this purpose. Windows CMD also works well in my machine).
 * Step 2 : cd to the directory where you have placed github_issue_backup.sh file
