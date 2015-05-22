@@ -83,7 +83,6 @@ $i=intval($argv[3]);
 			$bodyoutput[]=$body;
 		}
 	}	
-//fputs ($outfile,commentheader('drdhaval2785','2015-05-07T08:47:20'));
 	for ($j=0;$j<count($usernameoutput);$j++)
 	{
 		// Putting the username and time in the heading of each issue / comment in HTML file
@@ -187,7 +186,7 @@ function findissue($filepath)
 	$issue = $issue_comment_separator[0];
 	$comment = $issue_comment_separator[1];
 	// The regex is to prevent split on basis of [ in case of captured images or github flavored URL linking.
-	$split_issue = preg_split('/[^!][\[][^ ]/',$issue);
+	$split_issue = preg_split('/[^! ][\[][^ ]/',$issue);
 	// Exploding to get appropriate piece of information from .txt to put into stopgap.txt
 	$closed_at=explode('"comments":',$split_issue[1]);
 	$closed_by=explode('"closed_by":',$closed_at[1]);

@@ -1,0 +1,24 @@
+1. Right now only \r\n is treated, but users having \n or \r only should also get good <br/> facility.
+2. Github allows linking to the number of issue e.g. #74 would have a link to <a href="https://github.com/UserName/RepoName/issue/74" target="_blank">#74</a>
+3. Issue closed by XYZ has a specific red round with username associated in Github. This should be replicated.
+4. The browser interprets the data inside a codeline, which it shouldn't. 
+e.g. "Nothing big, but Parsedown creates <code><br/></code> tags which don't work in certain ancient browsers."
+is not rendered well. The broser interprets <br/> and <br /> which it shouldn't.
+5. Blockqoutes issue. The blockquote should end at the end of line character.
+e.g. "> Explicit is better than implicit.\r\n\r\nI find this to be a bit subjective. Should I also add a sentence that describes what PHP is? I'm not saying that the request is bad. I'm saying that I'd need a better reason than that."
+should render
+Explicit is better than implicit in blockquotes
+and 
+the next line outside blockquotes.
+6. Smiley and Emoticon support
+7. \"Shouldn't we correct the existing CCS digitization first?\" in body gives 
+\Shouldn't we correct the existing CCS digitization first?\
+whereas it should give 
+"Shouldn't we correct the existing CCS digitization first?"
+8. Fenced code not working well. For examples see file:///E:/C_drive/xampp/htdocs/drdhaval2785.github.io/github_issue_backup/sanskrit-lexicon/CORRECTIONS/html/56.html
+9. Open / Closed issue should have some tag somewhere showing its status.
+10. Many issues in rendering of file:///E:/C_drive/xampp/htdocs/drdhaval2785.github.io/github_issue_backup/sanskrit-lexicon/CORRECTIONS/html/12.html
+  "body": "<key2>sArisTA-KA~</key2> seems to have an issue, because it generates | ! | and only one of it's kind:\r\n`#sāristhā-khā!#` for `sArisTAKA`\r\n\r\n![saristha](https://cloud.githubusercontent.com/assets/80761/4617555/3384911e-5300-11e4-9705-d245aa76e479.PNG)\r\n\r\nDiscovored by https://github.com/drdhaval2785/SanskritSorting/issues/16", is the line
+  URL is not autolinked. codelines not working properly.
+ 11. in file:///E:/C_drive/xampp/htdocs/drdhaval2785.github.io/github_issue_backup/sanskrit-lexicon/CORRECTIONS/html/20.html the issue has change the word after ``` to a language name.
+ 12.
