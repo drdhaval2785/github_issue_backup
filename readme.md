@@ -5,11 +5,11 @@ This command fetches the issues and comments from your github repository and sto
 e.g. [text file](http://drdhaval2785.github.io/github_issue_backup/sanskrit-lexicon/CORRECTIONS/2.txt) and [html file](http://drdhaval2785.github.io/github_issue_backup/sanskrit-lexicon/CORRECTIONS/html/2.html).
 
 # Requirements
-[PHP](http://php.net/) - Setup your [PHP for commandline](https://www.youtube.com/watch?v=neBVQBL_2P0)
+1. [PHP](http://php.net/) - Setup your [PHP for commandline](https://www.youtube.com/watch?v=neBVQBL_2P0)
 
-[Git Bash](https://msysgit.github.io/) (or any Linux platform)
+2. [Git Bash](https://msysgit.github.io/) (or any Linux platform)
 
-[cURL](http://curl.haxx.se/) 
+3. [cURL](http://curl.haxx.se/) 
 
 Note 1 - Git has cURL inbuilt, so you won't need separate cURL if you use Git. 
 
