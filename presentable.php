@@ -116,7 +116,6 @@ fputs($outfile,"</body></html>");
 // Closing the HTML file
 fclose($outfile);
 
-
 	
 	
 function parsedown($text)

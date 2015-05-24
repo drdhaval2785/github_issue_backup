@@ -12,6 +12,7 @@ e.g. [text file](http://drdhaval2785.github.io/github_issue_backup/sanskrit-lexi
 [cURL](http://curl.haxx.se/) 
 
 Note 1 - Git has cURL inbuilt, so you won't need separate cURL if you use Git. 
+
 Note 2 - If you have installed Git, your windows CMD.exe also become able to execute this program. (So, you can stick to your favourite commandline).
 
 
