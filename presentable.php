@@ -137,7 +137,6 @@ function github_flavor($text)
 }
 function syntax_highlight($text)
 {
-	echo "yes";
 	$text = str_replace('<pre><code class="language-','<pre class="brush: ',$text);
 //	$text = str_replace('</code></pre>','</pre>',$text);
 	return $text;
