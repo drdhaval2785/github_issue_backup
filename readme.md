@@ -48,6 +48,10 @@ state=all fetches all the issues (Available options are open/closed/all).
    
 `>>$1/$2/$a.txt` appends the data fetched by cURL to the file which is numbered as per issue number e.g. drdhaval2785/SanskritVerb/1.txt
 
-# Documentation of parsing the data
-The present parsing script is [presentable.php](https://github.com/drdhaval2785/github_issue_backup/blob/master/presentable.php) which is a wrapper on [ParseDown](http://parsedown.org/) for better handling of Github Flavored Markdown and minor variations to handle how github API gives the data.
-The environment in HTML is derived from the CSS files which github uses - [CSS1](https://github.com/drdhaval2785/github_issue_backup/blob/master/github-c486157afcc5f58155a921bc675afb08733fbaa8dcf39ac2104d3.css) and [CSS2](https://github.com/drdhaval2785/github_issue_backup/blob/master/github2-da2e842cc3f0aaf33b727d0ef034243c12ab008fd09b24868b97.css)
+# Acknowledgements
+1. The present parsing script is [presentable.php](https://github.com/drdhaval2785/github_issue_backup/blob/master/presentable.php) which is a wrapper on [ParseDown](http://parsedown.org/) for better handling of Github Flavored Markdown and minor variations to handle how github API gives the data.
+2. The environment in HTML is derived from the CSS files which github uses - [CSS1](https://github.com/drdhaval2785/github_issue_backup/blob/master/github-c486157afcc5f58155a921bc675afb08733fbaa8dcf39ac2104d3.css) and [CSS2](https://github.com/drdhaval2785/github_issue_backup/blob/master/github2-da2e842cc3f0aaf33b727d0ef034243c12ab008fd09b24868b97.css)
+3. The syntax highlighting is taken from [SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/download/).
+
+# Changelog
+1. Version 1.0.0 launched on 24 May 2015.
