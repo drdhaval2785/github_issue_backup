@@ -13,6 +13,8 @@ echo creating directory $1/$2
 mkdir -p $1/$2/html || exit 1
 # copying the necessary code for syntax highlighting. See http://alexgorbatchev.com/SyntaxHighlighter/download/ for the downloaded folder.
 cp -r syntaxhighlighter $1/$2/html
+# copying the necessary code for Emojis. See https://github.com/drdhaval2785/github_issue_backup/issues/11 and https://github.com/chobie/Emoji for details.
+cp -r Emoji $1/$2/html
 a=`expr 1`
 # making iteration till the third argument (issue number till which the user wants to fetch the issues).
 while [ $a -lt `expr $3 + 1` ]

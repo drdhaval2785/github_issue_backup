@@ -1,6 +1,7 @@
 <?php
 // Including Parsedown.php from https://github.com/erusev/parsedown
 include 'Parsedown.php';
+include 'Emoji\src\Emoji\Emoji.php';
 // Copying the stylesheets of github to the directory where we would be storing the HTML files.
 copy("github-c486157afcc5f58155a921bc675afb08733fbaa8dcf39ac2104d3.css","$argv[1]/$argv[2]/html/github-c486157afcc5f58155a921bc675afb08733fbaa8dcf39ac2104d3.css");
 copy("github2-da2e842cc3f0aaf33b727d0ef034243c12ab008fd09b24868b97.css","$argv[1]/$argv[2]/html/github2-da2e842cc3f0aaf33b727d0ef034243c12ab008fd09b24868b97.css");
@@ -87,6 +88,8 @@ $body = parsedown($body);
 $body = github_flavor($body);
 // syntax highlighting. See https://github.com/drdhaval2785/github_issue_backup/issues/19 and commit https://github.com/drdhaval2785/github_issue_backup/commit/7e7ce4d033c4cc4599f3a5cf8111d2212b0403b9
 $body = syntax_highlight($body);
+// emoji
+$body = emoji_display($body);
 // Putting the body in the HTML.
 fputs($outfile,commentbody($body));
 
@@ -105,6 +108,7 @@ foreach ($comment_details as $value)
 	$body = parsedown($body);
 	$body = github_flavor($body);
 	$body = syntax_highlight($body);
+	$body = emoji_display($body);
 	fputs($outfile,commentbody($body));	
 }
 // Putting the endings in HTML
@@ -140,6 +144,13 @@ function syntax_highlight($text)
 	$text = str_replace('<pre><code class="language-','<pre class="brush: ',$text);
 //	$text = str_replace('</code></pre>','</pre>',$text);
 	return $text;
+}
+function emoji_display($text)
+{
+	$emoji = new Emoji();
+	$output = $emoji->render($text);
+	$output = str_replace('<img src="./assets/','<img src="Emoji/assets/',$output);
+	return $output;
 }
 
 function commentheader($username,$time,$comment_id)
