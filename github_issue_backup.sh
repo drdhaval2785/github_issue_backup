@@ -11,6 +11,7 @@ echo started execution at
 timestamp
 echo creating directory $1/$2
 mkdir -p $1/$2/html || exit 1
+cp -r syntaxhighlighter $1/$2/html
 a=`expr 1`
 # making iteration till the third argument (issue number till which the user wants to fetch the issues).
 while [ $a -lt `expr $3 + 1` ]
@@ -34,8 +35,7 @@ do
 	# At the end of this activity, the data in 1.txt would be of the format issue+comments thereon.
 	# incrementing for the next iteration.
 	echo preparing $a.html for display
-#	php presentable.php $1 $2 $a
-	php presentable_json_trial.php $1 $2 $a
+	php presentable.php $1 $2 $a
 	echo completed issue number $a
 	a=`expr $a + 1`
 done
