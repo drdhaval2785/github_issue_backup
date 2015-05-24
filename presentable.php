@@ -4,7 +4,7 @@ include 'Parsedown.php';
 // Copying the stylesheets of github to the directory where we would be storing the HTML files.
 copy("github-c486157afcc5f58155a921bc675afb08733fbaa8dcf39ac2104d3.css","$argv[1]/$argv[2]/html/github-c486157afcc5f58155a921bc675afb08733fbaa8dcf39ac2104d3.css");
 copy("github2-da2e842cc3f0aaf33b727d0ef034243c12ab008fd09b24868b97.css","$argv[1]/$argv[2]/html/github2-da2e842cc3f0aaf33b727d0ef034243c12ab008fd09b24868b97.css");
-// Header for proper display of UTF-8 and CSS links
+// Header for proper display of UTF-8, CSS links and javascript for syntax highlighting.
 $header = "<!DOCTYPE html>
 <html class='' lang='en'>
 <head prefix='og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/object# article: http://ogp.me/ns/article# profile: http://ogp.me/ns/profile#'>
@@ -55,28 +55,47 @@ $argv2 = $argv[2];
 
 // The third argument of commandline.
 $i=intval($argv[3]);
+// Creating an HTML file to store the output.
 $outfile = fopen("$argv[1]/$argv[2]/html/$i.html","w+");
+// Putting the header inside HTML file.
 fputs($outfile,$header);
+// Reading from the .txt file of individual issue. UserName/RepoName/IssueNumber.txt format.
 $in = file_get_contents("$argv[1]/$argv[2]/$i.txt");
+// Using the separator 'BODY STARTS FROM HERE' to bifurcate the data in two parts. The first part is Issue. The second part is comments.
 $in_separate = explode('BODY STARTS FROM HERE',$in);
+// Issue details stored as an array.
 $issue_details = json_decode($in_separate[0],true);
+// Getting the details from json_decoded array.
 $issuenumber = $issue_details["html_url"];
 $title = $issue_details["title"];
+// Putting title in the HTML file.
 fputs($outfile,"<h1 align='center'><a href='$issuenumber' target='_blank'>$title</h1><hr/>");
+// Getting the username who created the issue and time of creation of an issue.
 $username = $issue_details["user"]["login"];
 $time = $issue_details["created_at"];
+// Trimming the time for comfortable display.
 $time = str_replace(array("T","Z"),array(" ",""),$time);
+// Getting the comment id.
 $comment_id = $issue_details["id"];
+// Putting the heading of an issue inside HTML.
 fputs($outfile,issueheader($username,$time,$comment_id));
+// Getting the body of an issue.
 $body = $issue_details["body"];
+// Parsing the body with ParseDown. https://github.com/erusev/parsedown/ for details.
 $body = parsedown($body);
+// Adding mentioning, issue number linking etc.
 $body = github_flavor($body);
+// syntax highlighting. See https://github.com/drdhaval2785/github_issue_backup/issues/19 and commit https://github.com/drdhaval2785/github_issue_backup/commit/7e7ce4d033c4cc4599f3a5cf8111d2212b0403b9
 $body = syntax_highlight($body);
+// Putting the body in the HTML.
 fputs($outfile,commentbody($body));
-	
+
+// Fetching details of comments in form of an array.	
 $comment_details = json_decode($in_separate[1],true);
+// Running the loop for all members of the array.
 foreach ($comment_details as $value)
 {
+	// As explained above.
 	$username = $value["user"]["login"];
 	$time = $value["created_at"];
 	$time = str_replace(array("T","Z"),array(" ",""),$time);
@@ -88,7 +107,6 @@ foreach ($comment_details as $value)
 	$body = syntax_highlight($body);
 	fputs($outfile,commentbody($body));	
 }
-
 // Putting the endings in HTML
 fputs($outfile,"</body></html>");
 // Closing the HTML file
@@ -97,12 +115,8 @@ fclose($outfile);
 
 	
 	
-	
-
 function parsedown($text)
 {
-	// sometimes users place line breaks after triple quotes. To overcome that issue this patch has been created.
-//	$text = preg_replace('/\r\n```\r\n([^`]*)\r\n```\r\n/', '\r\n```$1```\r\n', $text);
 	// sometimes users place a space between ] and ( for linking in markup. To overcome that.
 	$text = str_replace('] (','](',$text); // Links error correction
 	// To overcome aberrent behaviour in case the parser places a \ before " of href

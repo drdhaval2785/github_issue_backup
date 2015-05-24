@@ -11,6 +11,7 @@ echo started execution at
 timestamp
 echo creating directory $1/$2
 mkdir -p $1/$2/html || exit 1
+# copying the necessary code for syntax highlighting. See http://alexgorbatchev.com/SyntaxHighlighter/download/ for the downloaded folder.
 cp -r syntaxhighlighter $1/$2/html
 a=`expr 1`
 # making iteration till the third argument (issue number till which the user wants to fetch the issues).
@@ -28,6 +29,7 @@ do
    # This completes the noting of issue in our file.
 	curl 'https://api.github.com/repos/'$1/$2'/issues/'$a'?state=all&page=1&per_page=1000&client_id=1dd1dddcb68d6148c249&client_secret=7577e3bd5cb5ad20bea86430a8ed5a29df5fa455' > $1/$2/$a.txt
 	echo Appending comments on issue $a to $1/$2/$a.txt
+	# This is the separator by which we will separate the issue and comments in presentable.php.
 	echo BODY STARTS FROM HERE >> $1/$2/$a.txt 
    # >>$1/$2/$a.txt appends the data fetched by curl to the file which is numbered as per issue number e.g. drdhaval2785/SanskritVerb/1.txt
    # This completes the noting of comments on a particular issue in our file.
