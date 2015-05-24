@@ -1,5 +1,5 @@
 # What does this program do:
-Ever wanted to store all the discussion on your github repositories ? 
+Ever wanted to store all the discussion on your github repositories for viewing offline or for backup ?
 If yes, this is the tool for you !
 This command fetches the issues and comments from your github repository and stores it in a `.txt` file for backup. It also displays it in an HTML file which looks similar to GitHub environment,
 e.g. [text file](http://drdhaval2785.github.io/github_issue_backup/sanskrit-lexicon/CORRECTIONS/2.txt) and [html file](http://drdhaval2785.github.io/github_issue_backup/sanskrit-lexicon/CORRECTIONS/html/2.html).
