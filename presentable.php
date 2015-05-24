@@ -71,15 +71,17 @@ $i=intval($argv[3]);
 			$body = $value;
 			// trimming
 			$body = strip_useless($body);
-			$body = str_replace("\r\n"," \r\n",$body);
+//			$body = str_replace("\r\n"," \r\n",$body);
 			// Some preprocessing before parsing down.
-			$body = strip_quote_body($body);
+//			$body = strip_quote_body($body);
 			// Parsing down the markups by parsedown function (derived from parsedown.php)
+			$body = json_decode($body);
+			echo $body;
 			$body = parsedown($body);
 			// Doing some minor changes to correct the output of parsedown.
-			$body = post_parsedown($body);
+//			$body = post_parsedown($body);
 			// trimming
-			$body = strip_quote_body($body);
+//			$body = strip_quote_body($body);
 			$bodyoutput[]=$body;
 		}
 	}	
@@ -97,7 +99,7 @@ fputs($outfile,"</body></html>");
 // Closing the HTML file
 fclose($outfile);
 // Deleting the stopgap.txt file which was used as intermediate state file from .txt -> .html
-unlink("stopgap.txt");
+//unlink("stopgap.txt");
 
 
 
@@ -105,13 +107,14 @@ function strip_useless($text)
 {
 	$text = trim($text);
 	// removing unnecessary data from txt file
-	$text = str_replace(array('"url": ','"title": ','"body": ','"login": ','"html_url": ','"created_at": '),array('','','','','',''),$text);
+	$text = str_replace(array('"url": "','"title": "','"body": "','"login": "','"html_url": "','"created_at": "'),array('','','','','',''),$text);
+	$text = preg_replace('/",$/','',$text);
 	$text = trim($text);
-	$text = str_replace('\r\n\r\n\r\n','\r\n',$text);
-	$text = str_replace('\r\n\r\n','\r\n',$text);
+//	$text = str_replace('\r\n\r\n\r\n','\r\n',$text);
+//	$text = str_replace('\r\n\r\n','\r\n',$text);
 	// parsedown.php didnt handle \r\n properly. So a patch is made
-	$text = str_replace(array('\r\n'),array('
-	~~~'),$text);
+/*	$text = str_replace(array('\r\n'),array('
+	~~~'),$text);*/
 	return $text;
 }
 function strip_quote($text)
