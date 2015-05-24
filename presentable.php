@@ -1,4 +1,6 @@
 <?php
+# github_issue_backup version 1.0.0, Date 24 May 2015 (https://github.com/drdhaval2785/github_issue_backup)
+# Author - Dr. Dhaval Patel (http://youtu.be/kzsPG5vl95w) (drdhaval2785@gmail.com)
 // Including Parsedown.php from https://github.com/erusev/parsedown
 include 'Parsedown.php';
 include 'Emoji\src\Emoji\Emoji.php';

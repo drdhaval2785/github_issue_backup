@@ -1,3 +1,5 @@
+# github_issue_backup version 1.0.0, Date 24 May 2015 (https://github.com/drdhaval2785/github_issue_backup)
+# Author - Dr. Dhaval Patel (http://youtu.be/kzsPG5vl95w) (drdhaval2785@gmail.com)
 # This method uses api.github.com with client_id and client_secret for backing up issues. This program takes three arguments.
 # Typical command looks like the below
 # github_issue_backup.sh drdhval2785 SanskritVerb 150
