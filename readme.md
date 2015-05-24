@@ -1,4 +1,6 @@
 # What does this program do:
+Ever wanted to store all the discussion on your github repositories ? 
+If yes, this is the tool for you !
 This command fetches the issues and comments from your github repository and stores it in a `.txt` file for backup. It also displays it in an HTML file which looks similar to GitHub environment,
 e.g. [text file](http://drdhaval2785.github.io/github_issue_backup/sanskrit-lexicon/CORRECTIONS/2.txt) and [html file](http://drdhaval2785.github.io/github_issue_backup/sanskrit-lexicon/CORRECTIONS/html/2.html).
 
@@ -7,11 +9,14 @@ e.g. [text file](http://drdhaval2785.github.io/github_issue_backup/sanskrit-lexi
 
 [Git Bash](https://msysgit.github.io/) (or any Linux platform)
 
-[cURL](http://curl.haxx.se/) - N.B. Git has cURL inbuilt, so you won't need separate cURL if you use Git.
+[cURL](http://curl.haxx.se/) 
+
+Note 1 - Git has cURL inbuilt, so you won't need separate cURL if you use Git. 
+Note 2 - If you have installed Git, your windows CMD.exe also become able to execute this program. (So, you can stick to your favourite commandline).
 
 
 # User instructions:
-[Demonstration video](http://youtu.be/hNbLeMnywTA).
+[Demonstration video](http://youtu.be/kzsPG5vl95w).
 
 * Step 1 : Open your commandline with cURL installed (Git bash has cURL inbuilt. I use Git bash for this purpose. Windows CMD also works well in my machine).
 * Step 2 : cd to the directory where you have placed github_issue_backup.sh file
