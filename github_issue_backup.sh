@@ -12,7 +12,7 @@ timestamp() {
 echo started execution at 
 timestamp
 echo creating directory $1/$2
-mkdir -p $1/$2/html || exit 1
+mkdir -p $1/$2/html/images || exit 1
 # copying the necessary code for syntax highlighting. See http://alexgorbatchev.com/SyntaxHighlighter/download/ for the downloaded folder.
 cp -r syntaxhighlighter $1/$2/html
 # copying the necessary code for Emojis. See https://github.com/drdhaval2785/github_issue_backup/issues/11 and https://github.com/chobie/Emoji for details.
@@ -45,5 +45,18 @@ do
 	echo completed issue number $a
 	a=`expr $a + 1`
 done
+echo culled links of images
+php image_links.php $1 $2 $3
+# Fetching the images and storing in $1/$2/html/images/ folder.
+echo Fetching the images and storing in $1/$2/html/images/ folder.
+i=0
+while read line # Read a line
+do
+	curl $line > $1/$2/html/images/$i.png
+	i=$(($i + 1))
+done < "imagelinks.txt"
+# substituting the image links with local links
+echo Substituting the image links with local links.
+php substitute_images.php $1 $2 $3
 echo completed execution at 
 timestamp
