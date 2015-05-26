@@ -2,15 +2,18 @@
 $argv1 = $argv[1];
 $argv2 = $argv[2];
 $argv3 = $argv[3];
-
+$link = array();
 for ($x=1;$x<intval($argv3)+1;$x++)
 {
 	read_file($argv1,$argv2,$x);	
 }
 $linkfile = fopen("imagelinks.txt","w+");
-foreach ($link as $value)
+if (count($link)>0)
 {
-	fputs($linkfile,$value."\n");
+	foreach ($link as $value)
+	{
+		fputs($linkfile,$value."\n");
+	}	
 }
 fclose($linkfile);
 

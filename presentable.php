@@ -72,7 +72,30 @@ $issue_details = json_decode($in_separate[0],true);
 $issuenumber = $issue_details["html_url"];
 $title = $issue_details["title"];
 // Putting title in the HTML file.
-fputs($outfile,"<h1 align='center'><a href='$issuenumber' target='_blank'>$title</h1><hr/>");
+fputs($outfile,"<h1 align='center'><a href='$issuenumber' target='_blank'>$title</h1>	<hr/>");
+// Putting the closed/open tab
+if ($issue_details["closed_at"]!==null)
+{
+	$open_close = "    <div class='flex-table-item' align='center'>
+        <div class='state state-closed'>
+          <span class='octicon octicon-issue-closed'></span>
+          Closed
+        </div>
+    </div>
+";
+}
+else
+{
+	$open_close = "    <div class='flex-table-item' align='center'>
+        <div class='state state-open'>
+          <span class='octicon octicon-issue-opened'></span>
+          Open
+        </div>
+    </div>
+";
+}
+fputs($outfile,$open_close);
+
 // Getting the username who created the issue and time of creation of an issue.
 $username = $issue_details["user"]["login"];
 $time = $issue_details["created_at"];
