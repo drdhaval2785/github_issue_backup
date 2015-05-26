@@ -7,7 +7,7 @@ for ($x=1;$x<intval($argv3)+1;$x++)
 {
 	substitute_images($argv1,$argv2,$x);	
 }
-
+unlink("imagelinks.txt");
 
 function substitute_images($username,$reponame,$number)
 {
