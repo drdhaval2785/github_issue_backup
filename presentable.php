@@ -132,8 +132,11 @@ foreach ($comment_details as $value)
 	$body = $value["body"];
 	$body = parsedown($body);
 	$body = github_flavor($body);
-	$body = syntax_highlight($body);
-	$body = emoji_display($body);
+	if ($argv[4] === "FULL")
+	{
+		$body = syntax_highlight($body);
+		$body = emoji_display($body);		
+	}
 	fputs($outfile,commentbody($body));	
 }
 // Putting the endings in HTML

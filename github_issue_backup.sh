@@ -41,7 +41,7 @@ do
 	# At the end of this activity, the data in 1.txt would be of the format issue+comments thereon.
 	# incrementing for the next iteration.
 	echo preparing $a.html for display
-	php presentable.php $1 $2 $a
+	php presentable.php $1 $2 $a $4 # Trying to suppress the emojis / syntaxhighlighter by default. The user may activate if he needs. Needs testing.
 	echo completed issue number $a
 	a=`expr $a + 1`
 done
