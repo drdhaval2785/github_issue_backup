@@ -32,7 +32,7 @@ N.B. - The video was made for version 1.0.0 which took three arguments. Version 
 
 e.g. `github_issue_backup.sh drdhval2785 SanskritVerb 150 e:/backup -l`
 
-* This program takes 5 arguments.
+## This program takes 5 arguments.
 1. The first argument is the user/org name. 
 2. The second argument is repo name. 
 3. Third argument is the issue number till which you want to backup issues. 
