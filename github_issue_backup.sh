@@ -44,13 +44,13 @@ do
    # client_id and client_secret are the OAuth tokens which we obtained from github API for authorization.
    # >$1/$2/$a.txt writes the data fetched by curl to the file which is numbered as per issue number e.g. drdhaval2785/SanskritVerb/1.txt
    # This completes the noting of issue in our file.
-	curl 'https://api.github.com/repos/'$1/$2'/issues/'$a'?state=all&page=1&per_page=1000&client_id=1dd1dddcb68d6148c249&client_secret=7577e3bd5cb5ad20bea86430a8ed5a29df5fa455' > $1/$2/$a.txt
+	curl -s -S 'https://api.github.com/repos/'$1/$2'/issues/'$a'?state=all&page=1&per_page=1000&client_id=1dd1dddcb68d6148c249&client_secret=7577e3bd5cb5ad20bea86430a8ed5a29df5fa455' > $1/$2/$a.txt
 	echo Appending comments on issue $a to $1/$2/$a.txt.
 	# This is the separator by which we will separate the issue and comments in presentable.php.
 	echo BODY STARTS FROM HERE >> $1/$2/$a.txt 
    # >>$1/$2/$a.txt appends the data fetched by curl to the file which is numbered as per issue number e.g. drdhaval2785/SanskritVerb/1.txt
    # This completes the noting of comments on a particular issue in our file.
-	curl 'https://api.github.com/repos/'$1/$2'/issues/'$a'/comments?state=all&page=1&per_page=1000&client_id=1dd1dddcb68d6148c249&client_secret=7577e3bd5cb5ad20bea86430a8ed5a29df5fa455' >> $1/$2/$a.txt
+	curl -s -S 'https://api.github.com/repos/'$1/$2'/issues/'$a'/comments?state=all&page=1&per_page=1000&client_id=1dd1dddcb68d6148c249&client_secret=7577e3bd5cb5ad20bea86430a8ed5a29df5fa455' >> $1/$2/$a.txt
 	# At the end of this activity, the data in 1.txt would be of the format issue+comments thereon.
 	# incrementing for the next iteration.
 	echo preparing $a.html for display.
