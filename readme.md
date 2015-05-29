@@ -67,3 +67,4 @@ state=all fetches all the issues (Available options are open/closed/all).
 # Changelog
 1. Version 1.0.0 launched on 24 May 2015.
 2. Version 1.0.1 launched on 29 May 2015 with output folder and mode arguments.
+3. Version 1.0.2 launched on 29 May 2015 with logfile.
