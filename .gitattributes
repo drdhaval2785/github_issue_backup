@@ -19,5 +19,3 @@
 # linguist vendored path
 Emoji/* linguist-vendored
 syntaxhighlighter/* linguist-vendored
-Parsedown.php linguist-vendored
-presentable.php linguist-vendored
