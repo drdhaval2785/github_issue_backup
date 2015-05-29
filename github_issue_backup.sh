@@ -28,9 +28,17 @@ cp -r Emoji $1/$2/html
 echo Copied Emoji folder to $1/$2 folder. >> $1/$2/log.txt
 timestamp >> $1/$2/log.txt
 fi
+x=$3
+# Getting the issue number of a particular repository, if the user has passed argument "-a" to fetch all issues.
+if [ $3 == "-a" ]
+then
+curl -s -S 'https://api.github.com/repos/'$1/$2'/issues?state=all&page=1&per_page=1000&client_id=1dd1dddcb68d6148c249&client_secret=7577e3bd5cb5ad20bea86430a8ed5a29df5fa455' > issue.txt
+x=$(php get_issue_number.php);
+rm issue.txt
+fi
 a=`expr 1`
 # making iteration till the third argument (issue number till which the user wants to fetch the issues).
-while [ $a -lt `expr $3 + 1` ]
+while [ $a -lt `expr $x + 1` ]
 do
 	echo Started issue number $a.
 	echo Started issue number $a. >> $1/$2/log.txt
@@ -69,7 +77,7 @@ echo Fetching the images and storing in $1/$2/html/images/ folder.
 i=0
 while read line # Read a line
 do
-	curl $line > $1/$2/html/images/$i.png
+	curl -s -S $line > $1/$2/html/images/$i.png
 	i=$(($i + 1))
 done < "imagelinks.txt"
 echo Fetched images. >> $1/$2/log.txt
