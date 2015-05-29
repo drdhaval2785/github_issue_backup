@@ -132,7 +132,7 @@ foreach ($comment_details as $value)
 	$body = $value["body"];
 	$body = parsedown($body);
 	$body = github_flavor($body);
-	if ($argv[4] === "FULL")
+	if ($argv[4] !== "-l")
 	{
 		$body = syntax_highlight($body);
 		$body = emoji_display($body);		

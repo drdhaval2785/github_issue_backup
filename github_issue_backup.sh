@@ -13,10 +13,13 @@ echo started execution at
 timestamp
 echo creating directory $1/$2
 mkdir -p $1/$2/html/images || exit 1
+if [ "$5" != "-l" ]
+then
 # copying the necessary code for syntax highlighting. See http://alexgorbatchev.com/SyntaxHighlighter/download/ for the downloaded folder.
 cp -r syntaxhighlighter $1/$2/html
 # copying the necessary code for Emojis. See https://github.com/drdhaval2785/github_issue_backup/issues/11 and https://github.com/chobie/Emoji for details.
 cp -r Emoji $1/$2/html
+fi
 a=`expr 1`
 # making iteration till the third argument (issue number till which the user wants to fetch the issues).
 while [ $a -lt `expr $3 + 1` ]
@@ -41,7 +44,7 @@ do
 	# At the end of this activity, the data in 1.txt would be of the format issue+comments thereon.
 	# incrementing for the next iteration.
 	echo preparing $a.html for display
-	php presentable.php $1 $2 $a $4 # Trying to suppress the emojis / syntaxhighlighter by default. The user may activate if he needs. Needs testing.
+	php presentable.php $1 $2 $a $5 # Trying to suppress the emojis / syntaxhighlighter optionally to decrease the size of folder. Default is -f = FULL. Otherwise he may enter -l as fourth argument.
 	echo completed issue number $a
 	a=`expr $a + 1`
 done
@@ -58,5 +61,11 @@ done < "imagelinks.txt"
 # substituting the image links with local links
 echo Substituting the image links with local links.
 php substitute_images.php $1 $2 $3
+if [ "$4" != "" ]
+then
+rm -r $4/$1/$2
+mkdir -p $4/$1 || exit 1
+mv -f $1/$2 $4/$1
+fi
 echo completed execution at 
 timestamp
