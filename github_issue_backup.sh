@@ -61,7 +61,7 @@ done < "imagelinks.txt"
 # substituting the image links with local links
 echo Substituting the image links with local links.
 php substitute_images.php $1 $2 $3
-if [ "$4" != "" ]
+if [ "$4" != "-p" ]
 then
 rm -r $4/$1/$2
 mkdir -p $4/$1 || exit 1

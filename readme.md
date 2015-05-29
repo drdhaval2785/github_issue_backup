@@ -21,18 +21,22 @@ Note 2 - If you have installed Git, your windows CMD.exe also become able to exe
 
 * Step 1 : Open your commandline with cURL installed (Git bash has cURL inbuilt. I use Git bash for this purpose. Windows CMD also works well in my machine).
 * Step 2 : cd to the directory where you have placed github_issue_backup.sh file
-* Step 3 : In the commandline write `github_issue_backup.sh UserName RepoName IssueNumberToWhichDataIsToBeFetched` e.g. `github_issue_backup.sh drdhaval2785 github_issue_backup 5` to fetch the issues in the current repository. (Don't forget to change username, reponame, Issue number and Destination folder according to your need)
+* Step 3 : In the commandline write `github_issue_backup.sh UserName RepoName IssueNumberToWhichDataIsToBeFetched [OutputFolder | -p ] [ -l | -f ]` e.g. `github_issue_backup.sh drdhaval2785 github_issue_backup 5 e:/backup -f` to fetch the issues in the current repository. (Don't forget to change username, reponame, Issue number and Destination folder according to your need)
 * Step 4 : Press enter to execute the command.
-* Step 5 : The text data would be placed in username/reponame directory in the working directory and HTML data would be placed in username/reponame/html directory.
+* Step 5 : By default, text data would be placed in username/reponame directory in the working directory and HTML data would be placed in username/reponame/html directory. If you have selected any OutputFolder, the data would be stored there.
 
 # Documentation for fetching data
 * This method uses api.github.com with client_id and client_secret for backing up issues. 
-* Generic codeline is `github_issue_backup.sh UserName RepoName IssueToWhichDataIsToBeFetched`
+* Generic codeline is `github_issue_backup.sh UserName RepoName IssueNumberToWhichDataIsToBeFetched [OutputFolder | -p ] [-l | -f]`
 
-e.g. `github_issue_backup.sh drdhval2785 SanskritVerb 150`
+e.g. `github_issue_backup.sh drdhval2785 SanskritVerb 150 e:/backup -l`
 
-* This program takes three arguments.
-The first argument is the user/org name. The second argument is repo name. Third argument is the issue number till which you want to backup issues. Without any one it will not work.
+* This program takes 5 arguments.
+1. The first argument is the user/org name. 
+2. The second argument is repo name. 
+3. Third argument is the issue number till which you want to backup issues. 
+4. Fourth argument is Output Folder (in case you want to store the output somewhere other than the working directory). If you want to get the output in the working directory itself, write `-p` i.e. parent. 
+5. Fifth argument is the mode. `-l` would do limited version i.e. Syntax Highlighting and Emoji support would not be there. `-f` would give full support (but at the cost of 6 MB odd additional libraries being pasted).
 
 There are two lines in cURL which need a bit of explanation:
 
@@ -61,3 +65,4 @@ state=all fetches all the issues (Available options are open/closed/all).
 
 # Changelog
 1. Version 1.0.0 launched on 24 May 2015.
+2. Version 1.0.1 launched on 29 May 2015 with output folder and mode arguments.
