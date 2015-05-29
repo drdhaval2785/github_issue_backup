@@ -69,7 +69,7 @@ do
 	a=`expr $a + 1`
 done
 echo Fetched links of images.
-php image_links.php $1 $2 $3
+php image_links.php $1 $2 $x
 echo Fetched links of images. >> $1/$2/log.txt
 timestamp >> $1/$2/log.txt
 # Fetching the images and storing in $1/$2/html/images/ folder.
@@ -83,7 +83,7 @@ done < "imagelinks.txt"
 echo Fetched images. >> $1/$2/log.txt
 timestamp >> $1/$2/log.txt
 # substituting the image links with local links
-php substitute_images.php $1 $2 $3
+php substitute_images.php $1 $2 $x
 echo Substituted the image links with local links.
 echo Substituted the image links with local links. >> $1/$2/log.txt
 timestamp >> $1/$2/log.txt

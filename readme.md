@@ -35,7 +35,7 @@ e.g. `github_issue_backup.sh drdhval2785 SanskritVerb 150 e:/backup -l`
 ## This program takes 5 arguments.
 1. The first argument is the user/org name. 
 2. The second argument is repo name. 
-3. Third argument is the issue number till which you want to backup issues. 
+3. Third argument is the issue number till which you want to backup issues. If you are not sure about the number of the issues to be backed up write `-a` to download ALL issues of the repository. But this may slow down the speed a bit.
 4. Fourth argument is Output Folder (in case you want to store the output somewhere other than the working directory). If you want to get the output in the working directory itself, write `-p` i.e. parent. 
 5. Fifth argument is the mode. `-l` would do limited version i.e. Syntax Highlighting and Emoji support would not be there. `-f` would give full support (but at the cost of 6 MB odd additional libraries being pasted).
 
