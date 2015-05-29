@@ -69,3 +69,4 @@ state=all fetches all the issues (Available options are open/closed/all).
 2. Version 1.0.1 launched on 29 May 2015 with output folder and mode arguments.
 3. Version 1.0.2 launched on 29 May 2015 with logfile.
 4. Version 1.0.3 launched on 29 May 2015 with cURL progress meter silenced.
+5. Version 1.0.4 launched on 29 May 2015 with facility to backup all the repos of a user / organization. See issue 24.
