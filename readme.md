@@ -18,6 +18,7 @@ Note 2 - If you have installed Git, your windows CMD.exe also become able to exe
 
 # User instructions:
 [Demonstration video](http://youtu.be/kzsPG5vl95w).
+N.B. - The video was made for version 1.0.0 which took three arguments. Version 1.0.1 takes five arguments as explained below. The essense remains the same.
 
 * Step 1 : Open your commandline with cURL installed (Git bash has cURL inbuilt. I use Git bash for this purpose. Windows CMD also works well in my machine).
 * Step 2 : cd to the directory where you have placed github_issue_backup.sh file
