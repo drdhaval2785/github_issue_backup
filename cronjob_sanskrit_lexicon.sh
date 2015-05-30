@@ -1,1 +1,1 @@
-github_issue_backup.sh sanskrit-lexicon -a -a -p -f
+github_issue_backup.sh sanskrit-lexicon -a -a -p -l

@@ -4,11 +4,13 @@ $argv2 = $argv[2];
 $argv3 = $argv[3];
 $link = array();
 
+echo count($argv);
 $x = explode(" ",$argv[3]);
 foreach ($x as $val)
 {
 	read_file($argv1,$argv2,$val);	
 }
+
 $linkfile = fopen("imagelinks.txt","w+");
 if (count($link)>0)
 {

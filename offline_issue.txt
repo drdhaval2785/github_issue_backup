@@ -1,0 +1,5 @@
+In the following code lines, $x for bash is separated by space.
+When it is passed to PHP it gets changed to $argv[3] $argv[4] $argv[5] etc.
+It has to be corrected
+	php image_links.php $1 $yy $x
+	php substitute_images.php $1 $yy $x
