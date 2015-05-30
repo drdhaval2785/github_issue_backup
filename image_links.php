@@ -3,9 +3,11 @@ $argv1 = $argv[1];
 $argv2 = $argv[2];
 $argv3 = $argv[3];
 $link = array();
-for ($x=1;$x<intval($argv3)+1;$x++)
+
+$x = explode(" ",$argv[3]);
+foreach ($x as $val)
 {
-	read_file($argv1,$argv2,$x);	
+	read_file($argv1,$argv2,$val);	
 }
 $linkfile = fopen("imagelinks.txt","w+");
 if (count($link)>0)

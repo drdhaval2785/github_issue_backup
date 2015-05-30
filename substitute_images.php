@@ -3,9 +3,10 @@ $argv1 = $argv[1];
 $argv2 = $argv[2];
 $argv3 = $argv[3];
 
-for ($x=1;$x<intval($argv3)+1;$x++)
+$x = explode(" ",$argv[3]);
+foreach ($x as $val)
 {
-	substitute_images($argv1,$argv2,$x);	
+	substitute_images($argv1,$argv2,$val);	
 }
 unlink("imagelinks.txt");
 
