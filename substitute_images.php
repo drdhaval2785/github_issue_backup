@@ -3,7 +3,12 @@ $argv1 = $argv[1];
 $argv2 = $argv[2];
 $argv3 = $argv[3];
 
-$x = explode(" ",$argv[3]);
+for ($i=4;$i<count($argv);$i++)
+{
+	$argv[3] = $argv[3].",".$argv[$i];
+}
+
+$x = explode(",",$argv[3]);
 foreach ($x as $val)
 {
 	substitute_images($argv1,$argv2,$val);	
