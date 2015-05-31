@@ -3,7 +3,7 @@
 # Author - Dr. Dhaval Patel (http://youtu.be/kzsPG5vl95w) (drdhaval2785@gmail.com)
 // Including Parsedown.php from https://github.com/erusev/parsedown
 include 'Parsedown.php';
-include 'Emoji\src\Emoji\Emoji.php';
+include 'Emoji/src/Emoji/Emoji.php';
 // Copying the stylesheets of github to the directory where we would be storing the HTML files.
 copy("github-c486157afcc5f58155a921bc675afb08733fbaa8dcf39ac2104d3.css","$argv[1]/$argv[2]/html/github-c486157afcc5f58155a921bc675afb08733fbaa8dcf39ac2104d3.css");
 copy("github2-da2e842cc3f0aaf33b727d0ef034243c12ab008fd09b24868b97.css","$argv[1]/$argv[2]/html/github2-da2e842cc3f0aaf33b727d0ef034243c12ab008fd09b24868b97.css");

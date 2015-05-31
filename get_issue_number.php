@@ -20,8 +20,8 @@ elseif (strpos($argv[1],',')!==false)
 	{
 		if (strpos($val,":")!==false)
 		{
-			$lower = explode(":",$val)[0];
-			$upper = explode(":",$val)[1];
+			$lower0 = explode(":",$val); $lower=$lower0[0];
+            $upper0 = explode(":",$val);$upper = $upper0[1];			
 			for ($i=$lower;$i<$upper+1;$i++)
 			{
 				$cr = $cr." ".$i;
