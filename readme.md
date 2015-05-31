@@ -18,26 +18,26 @@ Note 2 - If you have installed Git, your windows CMD.exe also become able to exe
 
 # User instructions:
 [Demonstration video](http://youtu.be/kzsPG5vl95w).
-N.B. - The video was made for version 1.0.0 which took three arguments. Version 1.0.1 takes five arguments as explained below. The essense remains the same.
+N.B. - The video was made for version 1.0.0 which took three arguments. Version 1.1.0 takes five arguments as explained below. The essense remains the same.
 
 * Step 1 : Open your commandline with cURL installed (Git bash has cURL inbuilt. I use Git bash for this purpose. Windows CMD also works well in my machine).
 * Step 2 : cd to the directory where you have placed github_issue_backup.sh file
-* Step 3 : In the commandline write `github_issue_backup.sh UserName RepoName IssueNumberToWhichDataIsToBeFetched [OutputFolder | -p ] [ -l | -f ]` e.g. `github_issue_backup.sh drdhaval2785 github_issue_backup 5 e:/backup -f` to fetch the issues in the current repository. (Don't forget to change username, reponame, Issue number and Destination folder according to your need)
+* Step 3 : In the commandline write `github_issue_backup.sh UserName RepoName IssueNumber [OutputFolder | -p ] [ -l | -f ]` e.g. `github_issue_backup.sh drdhaval2785 github_issue_backup 5 e:/backup -f` to fetch the issues in the current repository. (Don't forget to change username, reponame, Issue number and Destination folder according to your need)
 * Step 4 : Press enter to execute the command.
 * Step 5 : By default, text data would be placed in username/reponame directory in the working directory and HTML data would be placed in username/reponame/html directory. If you have selected any OutputFolder, the data would be stored there.
 
 # Documentation for fetching data
 * This method uses api.github.com with client_id and client_secret for backing up issues. 
-* Generic codeline is `github_issue_backup.sh UserName RepoName IssueNumberToWhichDataIsToBeFetched [OutputFolder | -p ] [-l | -f]`
+* Generic codeline is `github_issue_backup.sh UserName RepoName IssueNumber [ OutputFolder | -p ] [ -l | -f ]`
 
-e.g. `github_issue_backup.sh drdhval2785 SanskritVerb 150 e:/backup -l`
+e.g. `github_issue_backup.sh drdhval2785 SanskritVerb 1:10,13,15 e:/backup -l`
 
 ## This program takes 5 arguments.
-1. The first argument is the user/org name. 
-2. The second argument is repo name. 
-3. Third argument is the issue number till which you want to backup issues. If you are not sure about the number of the issues to be backed up write `-a` to download ALL issues of the repository. But this may slow down the speed a bit.
+1. The first argument is the user/org name. e.g. drdhaval2785
+2. The second argument is repo name. e.g. SanskritVerb
+3. Third argument is the issue number. You can enter the issue numbers separated by a comma e.g. `1,2,3,15,18`. You can also write ranges separated by `:` e.g. `1:10,15,20`. If you want to backup all the issues write `-a` to download ALL issues of the repository.
 4. Fourth argument is Output Folder (in case you want to store the output somewhere other than the working directory). If you want to get the output in the working directory itself, write `-p` i.e. parent. 
-5. Fifth argument is the mode. `-l` would do limited version i.e. Syntax Highlighting and Emoji support would not be there. `-f` would give full support (but at the cost of 6 MB odd additional libraries being pasted).
+5. Fifth argument is the mode. `-l` would do limited version i.e. Syntax Highlighting and Emoji support would not be there. `-f` would give full support (but at the cost of 6 MB odd additional libraries being pasted in each directory).
 
 There are two lines in cURL which need a bit of explanation:
 
@@ -50,8 +50,6 @@ state=all fetches all the issues (Available options are open/closed/all).
 `page=1` means the first page of the output.
 
 `per_page=1000` would mean the the output would have 1000 entries maximum. If your issue has more than 1000 comments, this can be increased to suitable number.
-
-`client_id` and `client_secret` are the OAuth tokens which we obtained from github API for authorization.
 
 `>$1/$2/$a.txt` writes the data fetched by curl to the file which is numbered as per issue number e.g. drdhaval2785/SanskritVerb/1.txt
 
@@ -70,3 +68,4 @@ state=all fetches all the issues (Available options are open/closed/all).
 3. Version 1.0.2 launched on 29 May 2015 with logfile.
 4. Version 1.0.3 launched on 29 May 2015 with cURL progress meter silenced.
 5. Version 1.0.4 launched on 29 May 2015 with facility to backup all the repos of a user / organization. See issue 24.
+6. Version 1.1.0 launched on 30 May 2015 with facility to backup specific issue numbers rather than whole data.
