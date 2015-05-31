@@ -51,6 +51,7 @@ e.g. `github_issue_backup.sh drdhval2785 SanskritVerb 1:10,13,15 e:/backup -l`
 8. `github_issue_backup.sh drdhaval2785 -a -a e:/output -f` would fetch all issues of all repositories of user drdhaval2785 with Syntax Highlighting and Emoji, and store it in e:/output directory.
 9. `github_issue_backup.sh drdhaval2785 -a -a -p -l` would fetch all issues of all repositories of user drdhaval2785 without Syntax Highlighting and Emoji, and store it in working directory.
 10. `github_issue_backup.sh drdhaval2785 -a -a -p -f` would fetch all issues of all repositories of user drdhaval2785 with Syntax Highlighting and Emoji, and store it in working directory.
+
 To fetch the data of all issues of all repositories of any given user / organization, option 10 is the safest one to work with (though a bit costly on space).
 
 ## cURL explanation
