@@ -34,11 +34,26 @@ e.g. `github_issue_backup.sh drdhval2785 SanskritVerb 1:10,13,15 e:/backup -l`
 
 ## This program takes 5 arguments.
 1. The first argument is the user/org name. e.g. drdhaval2785
-2. The second argument is repo name. e.g. SanskritVerb
+2. The second argument is repo name. e.g. SanskritVerb. If you want to backup all the repository of a user / organization, write `-a` to fetch all the repositories.
 3. Third argument is the issue number. You can enter the issue numbers separated by a comma e.g. `1,2,3,15,18`. You can also write ranges separated by `:` e.g. `1:10,15,20`. If you want to backup all the issues write `-a` to download ALL issues of the repository.
 4. Fourth argument is Output Folder (in case you want to store the output somewhere other than the working directory). If you want to get the output in the working directory itself, write `-p` i.e. parent. 
 5. Fifth argument is the mode. `-l` would do limited version i.e. Syntax Highlighting and Emoji support would not be there. `-f` would give full support (but at the cost of 6 MB odd additional libraries being pasted in each directory).
 
+## Examples of usage
+
+1. `github_issue_backup.sh drdhaval2785 SanskritVerb 1:10,13,15 -p -l` would fetch issues 1 to 10, 13 and 15 of drdhaval2785/SanskritVerb repository without Syntax Highlighting and Emoji, and store it in working directory.
+2. `github_issue_backup.sh drdhaval2785 SanskritVerb 1:10,13,15 -p -f` would fetch issues 1 to 10, 13 and 15 of drdhaval2785/SanskritVerb repository with Syntax Highlighting and Emoji, and store it in working directory.
+3. `github_issue_backup.sh drdhaval2785 SanskritVerb 1:10,13,15 e:/output -l` would fetch issues 1 to 10, 13 and 15 of drdhaval2785/SanskritVerb repository without Syntax Highlighting and Emoji, and store it in e:/output directory.
+4. `github_issue_backup.sh drdhaval2785 SanskritVerb 1:10,13,15 e:/output -f` would fetch issues 1 to 10, 13 and 15 of drdhaval2785/SanskritVerb repository with Syntax Highlighting and Emoji, and store it in e:/output directory.
+5. `github_issue_backup.sh drdhaval2785 SanskritVerb -a e:/output -l` would fetch all issues of drdhaval2785/SanskritVerb repository without Syntax Highlighting and Emoji, and store it in e:/output directory.
+6. `github_issue_backup.sh drdhaval2785 SanskritVerb -a e:/output -f` would fetch all issues of drdhaval2785/SanskritVerb repository with Syntax Highlighting and Emoji, and store it in e:/output directory.
+7. `github_issue_backup.sh drdhaval2785 -a -a e:/output -l` would fetch all issues of all repositories of user drdhaval2785 without Syntax Highlighting and Emoji, and store it in e:/output directory.
+8. `github_issue_backup.sh drdhaval2785 -a -a e:/output -f` would fetch all issues of all repositories of user drdhaval2785 with Syntax Highlighting and Emoji, and store it in e:/output directory.
+9. `github_issue_backup.sh drdhaval2785 -a -a -p -l` would fetch all issues of all repositories of user drdhaval2785 without Syntax Highlighting and Emoji, and store it in working directory.
+10. `github_issue_backup.sh drdhaval2785 -a -a -p -f` would fetch all issues of all repositories of user drdhaval2785 with Syntax Highlighting and Emoji, and store it in working directory.
+To fetch the data of all issues of all repositories of any given user / organization, option 10 is the safest one to work with (though a bit costly on space).
+
+## cURL explanation
 There are two lines in cURL which need a bit of explanation:
 
 ```curl 'https://api.github.com/repos/'$1/$2'/issues/'$a'?state=all&page=1&per_page=1000&client_id=1dd1dddcb68d6148c249&client_secret=7577e3bd5cb5ad20bea86430a8ed5a29df5fa455' > $1/$2/$a.txt```
