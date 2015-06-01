@@ -14,8 +14,6 @@ foreach ($x as $val)
 {
 	read_file($argv1,$argv2,$val);	
 }
-echo "Fetching the following images and storing in images folder";
-print_r($link);
 $linkfile = fopen("imagelinks.txt","w+");
 if (count($link)>0)
 {

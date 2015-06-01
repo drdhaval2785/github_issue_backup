@@ -21,12 +21,15 @@ fi
 
 for yy in $y;
 do
+	echo 
 	echo Processing $1/$yy repository
 	mkdir -p $1/$yy/html/images || exit 1
+	echo 
 	echo Created directory $1/$yy.
 	echo Created directory $1/$yy. > $1/$yy/log.txt
 	timestamp >> $1/$yy/log.txt
 
+	echo 
 	echo Started fetching data from $1/$yy repository,
 	timestamp
 	echo Started fetching data from $1/$yy repository. >> $1/$yy/log.txt 
@@ -54,9 +57,11 @@ do
 	# making iteration till the third argument (issue number till which the user wants to fetch the issues).
 	for a in $x;
 	do
+		echo 
 		echo Started issue number $a.
 		echo Started issue number $a. >> $1/$yy/log.txt
 		timestamp >> $1/$yy/log.txt
+		echo 
 		echo Printing issue $a to $1/$yy/$a.txt.
 	   # $1 is the username, $2 is the repositoryname, $a is the issue number.
 	   # An explanation of the arguments passed in this curl line is in order.
@@ -67,6 +72,7 @@ do
 	   # >$1/$2/$a.txt writes the data fetched by curl to the file which is numbered as per issue number e.g. drdhaval2785/SanskritVerb/1.txt
 	   # This completes the noting of issue in our file.
 		curl -s -S 'https://api.github.com/repos/'$1/$yy'/issues/'$a'?state=all&page=1&per_page=1000&client_id=1dd1dddcb68d6148c249&client_secret=7577e3bd5cb5ad20bea86430a8ed5a29df5fa455' > $1/$yy/$a.txt
+		echo 
 		echo Appending comments on issue $a to $1/$yy/$a.txt.
 		# This is the separator by which we will separate the issue and comments in presentable.php.
 		echo BODY STARTS FROM HERE >> $1/$yy/$a.txt 
@@ -75,31 +81,41 @@ do
 		curl -s -S 'https://api.github.com/repos/'$1/$yy'/issues/'$a'/comments?state=all&page=1&per_page=1000&client_id=1dd1dddcb68d6148c249&client_secret=7577e3bd5cb5ad20bea86430a8ed5a29df5fa455' >> $1/$yy/$a.txt
 		# At the end of this activity, the data in 1.txt would be of the format issue+comments thereon.
 		# incrementing for the next iteration.
+		echo 
 		echo preparing $a.html for display.
 		php presentable.php $1 $yy $a $5 # Trying to suppress the emojis / syntaxhighlighter optionally to decrease the size of folder. Default is -f = FULL. Otherwise he may enter -l as fourth argument.
+		echo 
 		echo Completed issue number $a.
 		echo Completed issue number $a. >> $1/$yy/log.txt
 		timestamp >> $1/$yy/log.txt
 	done
-	php image_links.php $1 $yy $x
-	echo Fetched links of images.
-	echo Fetched links of images. >> $1/$yy/log.txt
-	timestamp >> $1/$yy/log.txt
-	# Fetching the images and storing in $1/$2/html/images/ folder.
-	echo Fetching the images and storing in $1/$yy/html/images/ folder.
-	i=0
-	while read line # Read a line
-	do
-		curl -s -S $line > $1/$yy/html/images/$i.png
-		i=$(($i + 1))
-	done < "imagelinks.txt"
-	echo Fetched images. >> $1/$yy/log.txt
-	timestamp >> $1/$yy/log.txt
-	# substituting the image links with local links
-	php substitute_images.php $1 $yy $x
-	echo Substituted the image links with local links.
-	echo Substituted the image links with local links. >> $1/$yy/log.txt
-	timestamp >> $1/$yy/log.txt
+	if [ "$6" != "-n" ]
+	then
+		php image_links.php $1 $yy $x
+		echo 
+		echo Fetched links of images.
+		echo Fetched links of images. >> $1/$yy/log.txt
+		timestamp >> $1/$yy/log.txt
+		# Fetching the images and storing in $1/$2/html/images/ folder.
+		i=0
+			echo 
+			echo Please wait. Fetching all images and storing them in $1/$yy/html/images directory. It may take some time.
+		while read line # Read a line
+		do
+	#		echo 
+	#		echo Fetching image $line and storing in $1/$yy/html/images/$i.png
+			curl -s -S $line > $1/$yy/html/images/$i.png
+			i=$(($i + 1))
+		done < "imagelinks.txt"
+		echo Fetched images. >> $1/$yy/log.txt
+		timestamp >> $1/$yy/log.txt
+		# substituting the image links with local links
+		php substitute_images.php $1 $yy $x
+		echo 
+		echo Substituted the image links with local links.
+		echo Substituted the image links with local links. >> $1/$yy/log.txt
+		timestamp >> $1/$yy/log.txt
+	fi
 	echo Completed execution >> $1/$yy/log.txt
 	timestamp >> $1/$yy/log.txt
 	if [ "$4" != "-p" ]

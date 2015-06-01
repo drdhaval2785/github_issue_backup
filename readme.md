@@ -28,16 +28,17 @@ N.B. - The video was made for version 1.0.0 which took three arguments. Version 
 
 # Documentation for fetching data
 * This method uses api.github.com with client_id and client_secret for backing up issues. 
-* Generic codeline is `github_issue_backup.sh UserName RepoName IssueNumber [ OutputFolder | -p ] [ -l | -f ]`
+* Generic codeline is `github_issue_backup.sh UserName RepoName IssueNumber [ OutputFolder | -p ] [ -l | -f ] [ -y | -n ]`
 
-e.g. `github_issue_backup.sh drdhval2785 SanskritVerb 1:10,13,15 e:/backup -l`
+e.g. `github_issue_backup.sh drdhval2785 SanskritVerb 1:10,13,15 e:/backup -l -y`
 
-## This program takes 5 arguments.
+## This program takes 6 arguments.
 1. The first argument is the user/org name. e.g. drdhaval2785
 2. The second argument is repo name. e.g. SanskritVerb. If you want to backup all the repository of a user / organization, write `-a` to fetch all the repositories.
 3. Third argument is the issue number. You can enter the issue numbers separated by a comma e.g. `1,2,3,15,18`. You can also write ranges separated by `:` e.g. `1:10,15,20`. If you want to backup all the issues write `-a` to download ALL issues of the repository.
 4. Fourth argument is Output Folder (in case you want to store the output somewhere other than the working directory). If you want to get the output in the working directory itself, write `-p` i.e. parent. 
 5. Fifth argument is the mode. `-l` would do limited version i.e. Syntax Highlighting and Emoji support would not be there. `-f` would give full support (but at the cost of 6 MB odd additional libraries being pasted in each directory).
+6. Sixth argument is for downloading images. `-y` would download the images and `-n` would not download the images. This argument is optional. If it is not set, it would download images.
 
 ## Examples of usage
 
@@ -53,6 +54,8 @@ e.g. `github_issue_backup.sh drdhval2785 SanskritVerb 1:10,13,15 e:/backup -l`
 10. `github_issue_backup.sh drdhaval2785 -a -a -p -f` would fetch all issues of all repositories of user drdhaval2785 with Syntax Highlighting and Emoji, and store it in working directory.
 
 To fetch the data of all issues of all repositories of any given user / organization, option 10 is the safest one to work with (though a bit costly on space).
+
+In any of the above examples let's say 10th example, if the user doesn't want to download the images (to decrease backup size) he can add `-n` at the end like `github_issue_backup.sh drdhaval2785 -a -a -p -f -n`.
 
 ## cURL explanation
 There are two lines in cURL which need a bit of explanation:
@@ -85,3 +88,4 @@ state=all fetches all the issues (Available options are open/closed/all).
 4. Version 1.0.3 launched on 29 May 2015 with cURL progress meter silenced.
 5. Version 1.0.4 launched on 29 May 2015 with facility to backup all the repos of a user / organization. See issue 24.
 6. Version 1.1.0 launched on 30 May 2015 with facility to backup specific issue numbers rather than whole data.
+7. Version 1.1.1 launched on 1 June 2014 with facility to download / not to download images.
