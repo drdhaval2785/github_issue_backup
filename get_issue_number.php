@@ -1,5 +1,6 @@
 <?php 
 // Code to get the last number of issue, if the user has not provided it.
+error_reporting(0);
 if ($argv[1]==="-a")
 {
 	$a=file_get_contents("issue.txt"); 
