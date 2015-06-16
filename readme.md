@@ -88,4 +88,5 @@ state=all fetches all the issues (Available options are open/closed/all).
 4. Version 1.0.3 launched on 29 May 2015 with cURL progress meter silenced.
 5. Version 1.0.4 launched on 29 May 2015 with facility to backup all the repos of a user / organization. See issue 24.
 6. Version 1.1.0 launched on 30 May 2015 with facility to backup specific issue numbers rather than whole data.
-7. Version 1.1.1 launched on 1 June 2014 with facility to download / not to download images.
+7. Version 1.1.1 launched on 1 June 2015 with facility to download / not to download images.
+8. Version 1.1.2 launched on 16 June 2015 which adds one index.html file in each downloaded repository issues for easy navigation. Links to local copies.
