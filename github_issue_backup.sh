@@ -83,7 +83,7 @@ do
 		# incrementing for the next iteration.
 		echo 
 		echo preparing $a.html for display.
-		php presentable.php $1 $yy $a $5 # Trying to suppress the emojis / syntaxhighlighter optionally to decrease the size of folder. Default is -f = FULL. Otherwise he may enter -l as fourth argument.
+		php presentable.php $1 $yy $a $5
 		echo 
 		echo Completed issue number $a.
 		echo Completed issue number $a. >> $1/$yy/log.txt
