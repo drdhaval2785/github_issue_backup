@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 // Header for proper display of UTF-8, CSS links and javascript for syntax highlighting.
 $header = "<!DOCTYPE html>
 <html class='' lang='en'>
@@ -15,7 +16,6 @@ $header = "<!DOCTYPE html>
 ";
 $argv1 = $argv[1];
 $argv2 = $argv[2];
-$end=intval($argv[3]);
 
 // Creating an HTML file to store the output.
 $outfile = fopen("$argv[1]/$argv[2]/html/index.html","w+");
@@ -24,7 +24,7 @@ fputs($outfile,$header);
 fclose($outfile);
 
 $outfile=fopen("$argv[1]/$argv[2]/html/index.html","a+");
-for($i=1;$i<$end+1;$i++)
+for($i=1;$i<getmax()+1;$i++)
 {
 	// Reading from the .txt file of individual issue. UserName/RepoName/IssueNumber.txt format.
 	$in = file_get_contents("$argv[1]/$argv[2]/$i.txt");
@@ -41,4 +41,15 @@ for($i=1;$i<$end+1;$i++)
 fputs($outfile,"</body></html>");
 fclose($outfile);
 
+$inward = file_get_contents("$argv[1]/$argv[2]/html/index.html");
+$outward = str_replace("<a href='.html' target='_blank'></a>","",$inward);
+file_put_contents("$argv[1]/$argv[2]/html/index.html",$outward);
+
+function getmax()
+{
+	$a=file_get_contents("issue.txt"); 
+	$b=json_decode($a,true);
+	$upper = $b[0]['number'];
+	return intval($upper);
+}
 ?>

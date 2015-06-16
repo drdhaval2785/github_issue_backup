@@ -2,9 +2,9 @@
 # Author - Dr. Dhaval Patel (http://youtu.be/kzsPG5vl95w) (drdhaval2785@gmail.com)
 # This method uses api.github.com with client_id and client_secret for backing up issues. This program takes three arguments.
 # Typical command looks like the below
-# github_issue_backup.sh drdhval2785 SanskritVerb 150
+# github_issue_backup.sh drdhval2785 SanskritVerb 1:10,13,15 e:/backup -l -y
 # The first argument is the user/org name. The second argument is repo name. Third argument is the number till which you want to backup issues.
-# Generic codeline is github_issue_backup.sh UserName RepoName IssueToWhichDataIsToBeFetched
+# Generic codeline is github_issue_backup.sh UserName RepoName IssueNumber [ OutputFolder | -p ] [ -l | -f ] [ -y | -n ]
 # Define a timestamp function
 timestamp() {
   date +"%Y-%m-%d_%H-%M-%S"
@@ -51,7 +51,6 @@ do
 	# Getting the issue number of a particular repository, if the user has passed argument "-a" to fetch all issues.
 	curl -s -S 'https://api.github.com/repos/'$1/$yy'/issues?state=all&page=1&per_page=1000&client_id=1dd1dddcb68d6148c249&client_secret=7577e3bd5cb5ad20bea86430a8ed5a29df5fa455' > issue.txt
 	x=$(php get_issue_number.php $3);
-	rm issue.txt
 
 	a=`expr 1`
 	# making iteration till the third argument (issue number till which the user wants to fetch the issues).
@@ -116,6 +115,9 @@ do
 		echo Substituted the image links with local links. >> $1/$yy/log.txt
 		timestamp >> $1/$yy/log.txt
 	fi
+	echo Creating index of issues.
+	echo Creating index of issues >> $1/$yy/log.txt
+	php index_creator.php $1 $yy
 	echo Completed execution >> $1/$yy/log.txt
 	timestamp >> $1/$yy/log.txt
 	if [ "$4" != "-p" ]
@@ -131,6 +133,9 @@ do
 	echo
 	echo 
 done
+
+
+rm issue.txt
 
 echo completed execution at 
 timestamp
