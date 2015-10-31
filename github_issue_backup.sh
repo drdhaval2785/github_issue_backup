@@ -101,8 +101,8 @@ do
 			echo Please wait. Fetching all images and storing them in $1/$yy/html/images directory. It may take some time.
 		while read line # Read a line
 		do
-	#		echo 
-	#		echo Fetching image $line and storing in $1/$yy/html/images/$i.png
+			echo 
+			echo Fetching image $line and storing in $1/$yy/html/images/$i.png
 			curl -s -S $line > $1/$yy/html/images/$i.png
 			i=$(($i + 1))
 		done < "imagelinks.txt"
