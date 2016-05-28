@@ -1,10 +1,11 @@
-# github_issue_backup version 1.0.0, Date 24 May 2015 (https://github.com/drdhaval2785/github_issue_backup)
+# github_issue_backup version 1.1.3, Date 28 May 2016 (https://github.com/drdhaval2785/github_issue_backup)
 # Author - Dr. Dhaval Patel (http://youtu.be/kzsPG5vl95w) (drdhaval2785@gmail.com)
-# This method uses api.github.com with client_id and client_secret for backing up issues. This program takes three arguments.
+# This method uses api.github.com with client_id and client_secret for backing up issues. This program takes six arguments.
+# Generic codeline is github_issue_backup.sh UserName RepoName IssueNumber [ OutputFolder | -p ] [ -l | -f ] [ -y | -n ]
+# See readme.md for details on the arguments
 # Typical command looks like the below
 # github_issue_backup.sh drdhval2785 SanskritVerb 1:10,13,15 e:/backup -l -y
-# The first argument is the user/org name. The second argument is repo name. Third argument is the number till which you want to backup issues.
-# Generic codeline is github_issue_backup.sh UserName RepoName IssueNumber [ OutputFolder | -p ] [ -l | -f ] [ -y | -n ]
+
 # Define a timestamp function
 timestamp() {
   date +"%Y-%m-%d_%H-%M-%S"
@@ -50,9 +51,11 @@ do
 
 	x=$3
 	# Getting the issue number of a particular repository, if the user has passed argument "-a" to fetch all issues.
+	if [ $3 == "-a" ]
+	then
 	curl -s -S 'https://api.github.com/repos/'$1/$yy'/issues?state=all&page=1&per_page=1000&client_id=1dd1dddcb68d6148c249&client_secret=7577e3bd5cb5ad20bea86430a8ed5a29df5fa455' > issue.txt
 	x=$(php get_issue_number.php $3);
-
+	fi
 	a=`expr 1`
 	# making iteration till the third argument (issue number till which the user wants to fetch the issues).
 	for a in $x;
