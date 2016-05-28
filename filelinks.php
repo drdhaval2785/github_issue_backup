@@ -14,7 +14,7 @@ foreach ($x as $val)
 {
 	read_file($argv1,$argv2,$val);	
 }
-$linkfile = fopen("imagelinks.txt","w+");
+$linkfile = fopen("filelinks.txt","w+");
 if (count($link)>0)
 {
 	foreach ($link as $value)
@@ -27,20 +27,15 @@ fclose($linkfile);
 
 function read_file($username,$reponame,$number)
 {
-	$input = file_get_contents("$username/$reponame/html/$number.html");
+	$input = file_get_contents("$username/$reponame/$number.txt");
 	$array = explode(" ",$input);
-	$reg = preg_grep('/https:\/\/cloud.githubusercontent.com\/assets\/.+[.][a-z]{3,4}/',$array);
+	$reg = preg_grep("/https:\/\/github.com\/$username\/$reponame\/files/",$array);
 	$reg = array_map('trimming',$reg);
 }
 function trimming($text)
 { 
 	global $link;
-	$text = str_replace('src="','',$text);
-	$text = str_replace('PNG"','PNG',$text);
-	$text = str_replace('png"','png',$text);
-	$text = str_replace('JPG"','JPG',$text);
-	$text = str_replace('jpg"','jpg',$text);
-	$text = trim($text);
+	$text = preg_split('/[(]([^)]*)[)]/',$text,-1,PREG_SPLIT_DELIM_CAPTURE)[1];
 	$link[] = $text;
 }
 

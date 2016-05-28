@@ -24,6 +24,7 @@ do
 	echo 
 	echo Processing $1/$yy repository
 	mkdir -p $1/$yy/html/images || exit 1
+	mkdir -p $1/$yy/html/files || exit 1
 	echo 
 	echo Created directory $1/$yy.
 	echo Created directory $1/$yy. > $1/$yy/log.txt
@@ -94,6 +95,10 @@ do
 		echo 
 		echo Fetched links of images.
 		echo Fetched links of images. >> $1/$yy/log.txt
+		php filelinks.php $1 $yy $x
+		echo 
+		echo Fetched links of files.
+		echo Fetched links of files. >> $1/$yy/log.txt
 		timestamp >> $1/$yy/log.txt
 		# Fetching the images and storing in $1/$2/html/images/ folder.
 		i=0
@@ -108,11 +113,31 @@ do
 		done < "imagelinks.txt"
 		echo Fetched images. >> $1/$yy/log.txt
 		timestamp >> $1/$yy/log.txt
+
+		echo 
+		echo Please wait. Fetching all files and storing them in $1/$yy/html/files directory. It may take some time.
+		while read line # Read a line
+		do
+			echo 
+			echo Fetching file $line and storing in $1/$yy/html/files
+			fname=$line
+			curl -s -S -L $line > $1/$yy/html/files/"${fname##*/}"
+		done < "filelinks.txt"
+		echo Fetched files. >> $1/$yy/log.txt
+		timestamp >> $1/$yy/log.txt
+
 		# substituting the image links with local links
 		php substitute_images.php $1 $yy $x
 		echo 
 		echo Substituted the image links with local links.
 		echo Substituted the image links with local links. >> $1/$yy/log.txt
+		timestamp >> $1/$yy/log.txt
+
+		# substituting the file links with local links
+		php substitute_files.php $1 $yy $x
+		echo 
+		echo Substituted the file links with local links.
+		echo Substituted the file links with local links. >> $1/$yy/log.txt
 		timestamp >> $1/$yy/log.txt
 	fi
 	echo Creating index of issues.
