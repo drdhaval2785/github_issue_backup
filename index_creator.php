@@ -24,7 +24,7 @@ fputs($outfile,$header);
 fclose($outfile);
 
 $outfile=fopen("$argv[1]/$argv[2]/html/index.html","a+");
-for($i=1;$i<getmax()+1;$i++)
+for($i=1;$i<getmax($argv[1],$argv[2])+1;$i++)
 {
 	// Reading from the .txt file of individual issue. UserName/RepoName/IssueNumber.txt format.
 	$in = file_get_contents("$argv[1]/$argv[2]/$i.txt");
@@ -45,11 +45,10 @@ $inward = file_get_contents("$argv[1]/$argv[2]/html/index.html");
 $outward = str_replace("<a href='.html' target='_blank'></a>","",$inward);
 file_put_contents("$argv[1]/$argv[2]/html/index.html",$outward);
 
-function getmax()
+function getmax($arg1,$arg2)
 {
-	$a=file_get_contents("issue.txt"); 
-	$b=json_decode($a,true);
-	$upper = $b[0]['number'];
-	return intval($upper);
+	$a=file("$arg1/$arg2/index.txt");
+	$a = array_map('intval',$a);
+	return max($a);
 }
 ?>

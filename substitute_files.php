@@ -13,7 +13,7 @@ foreach ($x as $val)
 {
 	substitute_files($argv1,$argv2,$val);	
 }
-unlink("filelinks.txt");
+#unlink("filelinks.txt");
 
 function substitute_files($username,$reponame,$number)
 {

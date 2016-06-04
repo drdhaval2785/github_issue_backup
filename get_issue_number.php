@@ -1,17 +1,48 @@
 <?php 
 // Code to get the last number of issue, if the user has not provided it.
 error_reporting(0);
+
 if ($argv[1]==="-a")
 {
-	$a=file_get_contents("issue.txt"); 
+	// Adding a new line in timelog.txt
+	if (is_file('timelog.txt'))
+	{
+		$tlog = fopen('timelog.txt','a+','utf-8');
+		fputs($tlog,"\n");
+		fclose($tlog);
+	}
+	$user = $argv[2];
+	$repo = $argv[3];
+	$a=file_get_contents("issue.txt");
 	$b=json_decode($a,true);
 	$cr = '';
-	$upper = $b[0]['number'];
-	for ($i=1;$i<$upper+1;$i++)
+	$times[] = '1980-01-01T00:00:01Z';
+	if (count($b)>0)
 	{
-		$cr = $cr." ".$i;
+		$upper = $b[0]['number'];
+		for ($j=$upper;$j>=0;$j--)
+		{
+			$cr = $b[$j]['number']." ".$cr;
+			$times[] = $b[$j]['updated_at'];
+		}
 	}
-	echo $cr;
+	$cr = trim($cr);
+	if ($cr!=="")
+	{
+		echo $cr;
+	}
+	elseif (count($b)===0)
+	{
+		echo 'EXIT1';
+	}
+	else
+	{
+		echo 'EXIT';
+	}
+	// Writing a timelog.
+	$tlog = fopen('timelog.txt','a+','utf-8');
+	fputs($tlog,$user.",".$repo.",".max($times).",");
+	fclose($tlog);
 }
 elseif (strpos($argv[1],',')!==false)
 {

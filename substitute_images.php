@@ -13,25 +13,23 @@ foreach ($x as $val)
 {
 	substitute_images($argv1,$argv2,$val);	
 }
-unlink("imagelinks.txt");
+#unlink("imagelinks.txt");
 
 function substitute_images($username,$reponame,$number)
 {
 	$input = file_get_contents("$username/$reponame/html/$number.html");
-	$index_number = file("imagelinks.txt");
-	if (count($index_number)>0)
+	$filename = file("imagelinks.txt");
+	if (count($filename)>0)
 	{
-		$index_number = array_map('trim',$index_number);
-		$keys = array_keys($index_number);
-		foreach ($keys as $value) { $imagekeys[] = "images/".$value.".png"; }
-		$output = str_replace($index_number,$imagekeys,$input);
+		$filename = array_map('trim',$filename);
+		foreach($filename as $fn)
+		{
+			$rep = preg_replace('/^(h.+\/\/cloud.+)\/([^\/]+)$/',"images/$2",$fn);
+			$input = str_replace($fn,$rep,$input);
+		}
 		$outfile = fopen("$username/$reponame/html/$number.html","w+");
-		fputs($outfile,$output);
+		fputs($outfile,$input);
 		fclose($outfile);
-		
 	}
 }
-
-
-
 ?>

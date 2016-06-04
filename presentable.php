@@ -70,6 +70,7 @@ $in_separate = explode('BODY STARTS FROM HERE',$in);
 $issue_details = json_decode($in_separate[0],true);
 // Getting the details from json_decoded array.
 $issuenumber = $issue_details["html_url"];
+$number = $issue_details["number"];
 $title = $issue_details["title"];
 // Putting title in the HTML file.
 fputs($outfile,"<h1 align='center'><a href='$issuenumber' target='_blank'>$title</h1>	<hr/>");
