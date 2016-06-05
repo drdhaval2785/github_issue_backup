@@ -1,7 +1,16 @@
 <?php
-# github_issue_backup version 1.0.0, Date 24 May 2015 (https://github.com/drdhaval2785/github_issue_backup)
-# Author - Dr. Dhaval Patel (http://youtu.be/kzsPG5vl95w) (drdhaval2785@gmail.com)
-// Including Parsedown.php from https://github.com/erusev/parsedown
+/* This script is a supporting script for github_issue_backup version 1.2.0, Date 04 June 2016 (https://github.com/drdhaval2785/github_issue_backup)
+	Author - Dr. Dhaval Patel (http://youtu.be/kzsPG5vl95w) (drdhaval2785@gmail.com)
+	Includes - Parsedown.php from https://github.com/erusev/parsedown
+	Purpose - To read the Github flavoured markdown from issues, parse them and present them in decent HTML files
+	Usage - `php presentable.php username reponame issuenumber [-l | -f]`
+	Reference - php script 7 in github_issue_backup.sh
+	Arguments - This code takes four arguments. One - username, Two - reponame, Three - issuename. Four - -l for limited, -f for full version
+	Input - username/reponame/issuenumber.txt (generated via a cURL script in github_issue_backup.sh)
+	Ouput - username/reponame/html/issuenumber.html
+*/
+// Hide error reportings.
+error_reporting(0);
 include 'Parsedown.php';
 include 'Emoji/src/Emoji/Emoji.php';
 // Copying the stylesheets of github to the directory where we would be storing the HTML files.
@@ -53,10 +62,12 @@ $header = "<!DOCTYPE html>
 </head>
 <body class='logged_in  env-production windows vis-public'>
 ";
+// Read arguments
+// Username
 $argv1 = $argv[1];
+// Reponame
 $argv2 = $argv[2];
-
-// The third argument of commandline.
+// issue number
 $i=intval($argv[3]);
 // Creating an HTML file to store the output.
 $outfile = fopen("$argv[1]/$argv[2]/html/$i.html","w+");
@@ -75,6 +86,7 @@ $title = $issue_details["title"];
 // Putting title in the HTML file.
 fputs($outfile,"<h1 align='center'><a href='$issuenumber' target='_blank'>$title</h1>	<hr/>");
 // Putting the closed/open tab
+// Decide whether the issue is open or closed
 if ($issue_details["closed_at"]!==null)
 {
 	$open_close = "    <div class='flex-table-item' align='center'>
@@ -95,6 +107,7 @@ else
     </div>
 ";
 }
+// Put open or closed tab below the issue title.
 fputs($outfile,$open_close);
 
 // Getting the username who created the issue and time of creation of an issue.
@@ -114,14 +127,14 @@ $body = parsedown($body);
 $body = github_flavor($body);
 // syntax highlighting. See https://github.com/drdhaval2785/github_issue_backup/issues/19 and commit https://github.com/drdhaval2785/github_issue_backup/commit/7e7ce4d033c4cc4599f3a5cf8111d2212b0403b9
 $body = syntax_highlight($body);
-// emoji
+// emoji.
 $body = emoji_display($body);
 // Putting the body in the HTML.
 fputs($outfile,commentbody($body));
 
 // Fetching details of comments in form of an array.	
 $comment_details = json_decode($in_separate[1],true);
-// Running the loop for all members of the array.
+// Running the loop for all comments of an issue.
 foreach ($comment_details as $value)
 {
 	// As explained above.
@@ -159,11 +172,12 @@ function parsedown($text)
 	$Parsedown = new Parsedown();
 	return $Parsedown->text($text);
 }
+// Add certain github specific characteristics
 function github_flavor($text)
 {
 	global $argv1, $argv2;
 	$text = preg_replace('/@([^\W_ ]*)([\W_ ])/', '<strong><a href="https://github.com/$1" target="_blank">@$1</a></strong>$2', $text); // mentioning
-	$text = preg_replace('/[ ]#([0-9]*)[ ]/'," <a href='$1.html' target='_blank'>#$1</a> ",$text);
+	$text = preg_replace('/[ ]#([0-9]*)[ ]/'," <a href='$1.html' target='_blank'>#$1</a> ",$text); // Issue link to #number
 	$text = preg_replace('/^#([0-9]*)[ ]/',"<a href='$1.html' target='_blank'>#$1</a> ",$text);
 	return $text;
 }

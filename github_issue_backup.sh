@@ -14,8 +14,8 @@ timestamp() {
 }
 
 # Test whether the user exists, and exiting if it doesn't.
-curl -s 'https://api.github.com/users/'$1'?state=all&page=1&per_page=1000&client_id=1dd1dddcb68d6148c249&client_secret=7577e3bd5cb5ad20bea86430a8ed5a29df5fa455' > user.txt # cURL script 2
-z=$(php test_user_existence.php) # php script 2
+curl -s 'https://api.github.com/users/'$1'?state=all&page=1&per_page=1000&client_id=1dd1dddcb68d6148c249&client_secret=7577e3bd5cb5ad20bea86430a8ed5a29df5fa455' > user.txt # cURL script 1
+z=$(php test_user_existence.php) # php script 1
 if [ "$z" == "EXIT" ]
 then
 echo "User doesn't exist. Failure."
@@ -120,27 +120,28 @@ do
 		# making iteration till the third argument (issue number till which the user wants to fetch the issues).
 		for a in $x;
 		do
+			# Display to the user progress of issue download and processing. Also note to the log file.
 			echo issue $a
 			echo issue $a >> $1/$yy/log.txt
 			timestamp >> $1/$yy/log.txt
 		   # $1 is the username, $yy is the repositoryname, $a is the issue number.
-		   # An explanation of the arguments passed in this curl line is in order.
 		   # state=all fetches all the issues (Available options are open/closed/all).
 		   # page=1 means the first page of the output.
 		   # per_page=100 would mean the the output would have 100 entries maximum. If your issue has more than 100 comments, this has to iterate over pages. Not implemented right now.
 		   # client_id and client_secret are the OAuth tokens which we obtained from github API for authorization.
 		   # >$1/$yy/$a.txt writes the data fetched by curl to the file which is numbered as per issue number e.g. drdhaval2785/SanskritVerb/1.txt
 		   # This completes the noting of issue in our file.
-			curl -s -S 'https://api.github.com/repos/'$1/$yy'/issues/'$a'?state=all&page=1&per_page=100&client_id=1dd1dddcb68d6148c249&client_secret=7577e3bd5cb5ad20bea86430a8ed5a29df5fa455' > $1/$yy/$a.txt
+			curl -s -S 'https://api.github.com/repos/'$1/$yy'/issues/'$a'?state=all&page=1&per_page=100&client_id=1dd1dddcb68d6148c249&client_secret=7577e3bd5cb5ad20bea86430a8ed5a29df5fa455' > $1/$yy/$a.txt # cURL script 5
 			# This is the separator by which we will separate the issue and comments in presentable.php.
 			echo BODY STARTS FROM HERE >> $1/$yy/$a.txt 
 		   # >>$1/$2/$a.txt appends the data fetched by curl to the file which is numbered as per issue number e.g. drdhaval2785/SanskritVerb/1.txt
 		   # This completes the noting of comments on a particular issue in our file.
-			curl -s -S 'https://api.github.com/repos/'$1/$yy'/issues/'$a'/comments?state=all&page=1&per_page=100&client_id=1dd1dddcb68d6148c249&client_secret=7577e3bd5cb5ad20bea86430a8ed5a29df5fa455' >> $1/$yy/$a.txt
+			curl -s -S 'https://api.github.com/repos/'$1/$yy'/issues/'$a'/comments?state=all&page=1&per_page=100&client_id=1dd1dddcb68d6148c249&client_secret=7577e3bd5cb5ad20bea86430a8ed5a29df5fa455' >> $1/$yy/$a.txt # cURL script 6
 			# At the end of this activity, the data in 1.txt would be of the format issue+comments thereon.
 
 			# Preparing HTML for display.
-			php presentable.php $1 $yy $a $5
+			# Output in username/reponame/html/$a.html e.g. drdhaval2785/SanskritVerb/html/1.html
+			php presentable.php $1 $yy $a $5 # php script 7
 
 			# incrementing for the next iteration.
 		done
@@ -150,13 +151,13 @@ do
 		then
 			# Creating a local copy of images in issue.
 			# This code will generate file imagelinks.txt as output.
-			php image_links.php $1 $yy $x
+			php image_links.php $1 $yy $x # php script 7
 			echo Fetched links of images.
 			echo Fetched links of images. >> $1/$yy/log.txt
 
 			# Creating a local copy of files in issue.
 			# This code will generate file filelinks.txt as output.
-			php filelinks.php $1 $yy $x
+			php filelinks.php $1 $yy $x # php script 8
 			echo Fetched links of files.
 			echo Fetched links of files. >> $1/$yy/log.txt
 			timestamp >> $1/$yy/log.txt
@@ -167,7 +168,7 @@ do
 			do
 				fname=$line
 				echo Fetching $line
-				curl -s -S $line > $1/$yy/html/images/"${fname##*/}" # Storing only the filename of the image file and removing the preceding path of github.
+				curl -s -S $line > $1/$yy/html/images/"${fname##*/}" # Storing only the filename of the image file and removing the preceding path of github. # cURL script 7
 			done < "imagelinks.txt"
 			echo Fetched images. >> $1/$yy/log.txt
 			timestamp >> $1/$yy/log.txt
@@ -178,19 +179,20 @@ do
 			do
 				echo Fetching $line
 				fname=$line
-				curl -s -S -L $line > $1/$yy/html/files/"${fname##*/}"  # Storing only the filename of the file and removing the preceding path of github.
+				# Storing only the filename of the file and removing the preceding path of github.
+				curl -s -S -L $line > $1/$yy/html/files/"${fname##*/}" # cURL script 8
 			done < "filelinks.txt"
 			echo Fetched files. >> $1/$yy/log.txt
 			timestamp >> $1/$yy/log.txt
 
 			# substituting the image links with local links, for local navigation.
-			php substitute_images.php $1 $yy $x
+			php substitute_images.php $1 $yy $x # php script 9
 			echo Substituted the image links with local links.
 			echo Substituted the image links with local links. >> $1/$yy/log.txt
 			timestamp >> $1/$yy/log.txt
 
 			# substituting the file links with local links, for local navigation.
-			php substitute_files.php $1 $yy $x
+			php substitute_files.php $1 $yy $x # php script 10
 			echo Substituted the file links with local links.
 			echo Substituted the file links with local links. >> $1/$yy/log.txt
 			timestamp >> $1/$yy/log.txt
@@ -201,7 +203,7 @@ do
 		echo Creating index of issues >> $1/$yy/log.txt
 		# Creating an HTML representation for visualization of issues in a given repository.
 		# Output in username/reponame/html/index.html
-		php index_creator.php $1 $yy
+		php index_creator.php $1 $yy # php script 11
 
 		# Update timelog.txt
 		# This is done only after the script reaches its culmination.
@@ -212,7 +214,7 @@ do
 		echo Updated timelog.txt after successful completion.
 		echo Updated timelog.txt >> $1/$yy/log.txt
 		timestamp >> $1/$yy/log.txt
-		php timelogupdater.php
+		php timelogupdater.php # php script 12
 
 		# Completion message to the user
 		echo completed copying issues of $1/$yy to local machine at 
