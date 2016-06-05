@@ -1,5 +1,14 @@
 <?php 
-// Code to get the last number of issue, if the user has not provided it.
+/* This script is a supporting script for github_issue_backup version 1.2.0, Date 04 June 2016 (https://github.com/drdhaval2785/github_issue_backup)
+	Author - Dr. Dhaval Patel (http://youtu.be/kzsPG5vl95w) (drdhaval2785@gmail.com)
+	Purpose - To get the issue numbers which need to be downloaded.
+	Usage - `php get_issue_number.php issuelist username reponame`
+	Reference - php script 6 in github_issue_backup.sh
+	Arguments - This code takes three arguments. One - issuelist, Two - username, Three - reponame.
+	Input - issue.txt (generated via a cURL script in github_issue_backup.sh)
+	Ouput - A space separated list of issues to download e.g. `1 2 3 ... 20`.
+*/
+// Hide error reportings.
 error_reporting(0);
 
 if ($argv[1]==="-a")
