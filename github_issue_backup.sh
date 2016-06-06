@@ -168,7 +168,8 @@ do
 			do
 				fname=$line
 				echo Fetching $line
-				curl -s -S $line > $1/$yy/html/images/"${fname##*/}" # Storing only the filename of the image file and removing the preceding path of github. # cURL script 7
+				# Storing only the filename of the image file and removing the preceding path of github.
+				curl -s -S $line > $1/$yy/html/images/"${fname##*/}" # cURL script 7
 			done < "imagelinks.txt"
 			echo Fetched images. >> $1/$yy/log.txt
 			timestamp >> $1/$yy/log.txt
@@ -198,7 +199,8 @@ do
 			timestamp >> $1/$yy/log.txt
 		fi
 		# Create a list of issues based on files in the given repository. 
-		ls $1/$yy/[0-9]*.txt | grep -Po '\b[0-9]*\b' > $1/$yy/index.txt # index.txt makes list of issues which are there in the given repository.
+		# index.txt makes list of issues which are there in the given repository.
+		ls $1/$yy/[0-9]*.txt | grep -Po '\b[0-9]*\b' > $1/$yy/index.txt
 		echo Creating index of issues.
 		echo Creating index of issues >> $1/$yy/log.txt
 		# Creating an HTML representation for visualization of issues in a given repository.

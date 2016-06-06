@@ -1,5 +1,16 @@
 <?php
+/* This script is a supporting script for github_issue_backup version 1.2.0, Date 04 June 2016 (https://github.com/drdhaval2785/github_issue_backup)
+	Author - Dr. Dhaval Patel (http://youtu.be/kzsPG5vl95w) (drdhaval2785@gmail.com)
+	Purpose - To create an HTML index of downloaded issues.
+	Usage - `php substitute_images.php username reponame`
+	Reference - php script 12 in github_issue_backup.sh
+	Arguments - This code takes two arguments. One - username, Two - reponame.
+	Input - username/reponame/index.txt (generated via a shell script in github_issue_backup.sh)
+	Ouput - username/reponame/html/index.html
+*/
+// Hide error reportings.
 error_reporting(0);
+
 // Header for proper display of UTF-8, CSS links and javascript for syntax highlighting.
 $header = "<!DOCTYPE html>
 <html class='' lang='en'>
@@ -14,6 +25,7 @@ $header = "<!DOCTYPE html>
 </head>
 <body class='logged_in  env-production windows vis-public'>
 ";
+// Read arguments.
 $argv1 = $argv[1];
 $argv2 = $argv[2];
 
@@ -23,7 +35,9 @@ $outfile = fopen("$argv[1]/$argv[2]/html/index.html","w+");
 fputs($outfile,$header);
 fclose($outfile);
 
+// Create the output file.
 $outfile=fopen("$argv[1]/$argv[2]/html/index.html","a+");
+// For issue number 1 to maximum
 for($i=1;$i<getmax($argv[1],$argv[2])+1;$i++)
 {
 	// Reading from the .txt file of individual issue. UserName/RepoName/IssueNumber.txt format.
@@ -41,10 +55,13 @@ for($i=1;$i<getmax($argv[1],$argv[2])+1;$i++)
 fputs($outfile,"</body></html>");
 fclose($outfile);
 
+// Remove unnecessary parts from data.
 $inward = file_get_contents("$argv[1]/$argv[2]/html/index.html");
 $outward = str_replace("<a href='.html' target='_blank'></a>","",$inward);
 file_put_contents("$argv[1]/$argv[2]/html/index.html",$outward);
 
+// Function to get the maximum number of issues in username/reponame/index.txt file.
+// We run the index from 1 to the maximum issue number.
 function getmax($arg1,$arg2)
 {
 	$a=file("$arg1/$arg2/index.txt");
