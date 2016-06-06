@@ -151,13 +151,13 @@ do
 		then
 			# Creating a local copy of images in issue.
 			# This code will generate file imagelinks.txt as output.
-			php image_links.php $1 $yy $x # php script 7
+			php image_links.php $1 $yy $x # php script 8
 			echo Fetched links of images.
 			echo Fetched links of images. >> $1/$yy/log.txt
 
 			# Creating a local copy of files in issue.
 			# This code will generate file filelinks.txt as output.
-			php filelinks.php $1 $yy $x # php script 8
+			php filelinks.php $1 $yy $x # php script 9
 			echo Fetched links of files.
 			echo Fetched links of files. >> $1/$yy/log.txt
 			timestamp >> $1/$yy/log.txt
@@ -186,13 +186,13 @@ do
 			timestamp >> $1/$yy/log.txt
 
 			# substituting the image links with local links, for local navigation.
-			php substitute_images.php $1 $yy $x # php script 9
+			php substitute_images.php $1 $yy $x # php script 10
 			echo Substituted the image links with local links.
 			echo Substituted the image links with local links. >> $1/$yy/log.txt
 			timestamp >> $1/$yy/log.txt
 
 			# substituting the file links with local links, for local navigation.
-			php substitute_files.php $1 $yy $x # php script 10
+			php substitute_files.php $1 $yy $x # php script 11
 			echo Substituted the file links with local links.
 			echo Substituted the file links with local links. >> $1/$yy/log.txt
 			timestamp >> $1/$yy/log.txt
@@ -203,7 +203,7 @@ do
 		echo Creating index of issues >> $1/$yy/log.txt
 		# Creating an HTML representation for visualization of issues in a given repository.
 		# Output in username/reponame/html/index.html
-		php index_creator.php $1 $yy # php script 11
+		php index_creator.php $1 $yy # php script 12
 
 		# Update timelog.txt
 		# This is done only after the script reaches its culmination.
@@ -214,7 +214,7 @@ do
 		echo Updated timelog.txt after successful completion.
 		echo Updated timelog.txt >> $1/$yy/log.txt
 		timestamp >> $1/$yy/log.txt
-		php timelogupdater.php # php script 12
+		php timelogupdater.php # php script 13
 
 		# Completion message to the user
 		echo completed copying issues of $1/$yy to local machine at 
